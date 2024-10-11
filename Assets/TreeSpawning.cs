@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ABB : MonoBehaviour
+public class TreeSpawning : MonoBehaviour
 {
     [SerializeField] List<int> dataList;
     [SerializeField] Nodo NodoPrefab;
     [SerializeField] Queue<Nodo> nodos = new Queue<Nodo>();
     bool rootAssigned = false;
     Nodo rootNodo;
+    public Nodo RootNodo => rootNodo;
     [SerializeField] float posX, posXm;
     [SerializeField] float posY;
     [SerializeField] int depth = 0;
