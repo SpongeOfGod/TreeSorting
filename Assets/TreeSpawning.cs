@@ -17,10 +17,6 @@ public class TreeSpawning : MonoBehaviour
 
     private void Awake()
     {
-
-    }
-    void Start()
-    {
         for (int i = 0; i < dataList.Count; i++) 
         {
             if (rootAssigned) 
@@ -38,6 +34,9 @@ public class TreeSpawning : MonoBehaviour
             }
         }
     }
+    void Start()
+    {
+    }
 
     private void SearchInside(int data, Nodo nodo) 
     {
@@ -49,7 +48,6 @@ public class TreeSpawning : MonoBehaviour
                 nodo.izq = Instantiate(NodoPrefab, nodo.transform);
                 nodo.izq.AssignData(data, null, null, nodo);
                 nodo.izq.GetComponent<RectTransform>().anchoredPosition = new Vector2(posX * (offsetMultiplier/ (depth + 1)), posY);
-                ////nodo.izq.transform.position = new Vector2(posX - depth, posY);
                 return;
             }
             else

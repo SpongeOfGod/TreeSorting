@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,6 +12,7 @@ public class TreeSearch : MonoBehaviour
     public Button inOrderButton;
     public Button postOrderButton;
     public TextMeshProUGUI dataDisplay;
+    public TextMeshProUGUI depthDisplay;
     private void Awake()
     {
         preOrderButton.onClick.AddListener(SearchByPreOrder);
@@ -18,25 +20,40 @@ public class TreeSearch : MonoBehaviour
         postOrderButton.onClick.AddListener(SearchByPostOrder);
     }
 
+    private void Start()
+    {
+        int depth = CheckDepth(treeSpawning.RootNodo);
+        depthDisplay.text = depth.ToString();    
+    }
+
+    int CheckDepth(Nodo nodo) 
+    {
+        if (nodo == null) return -1;
+
+        return (1 + Math.Max(CheckDepth(nodo.izq), CheckDepth(nodo.der)));
+    }
     void SearchByPreOrder() 
     {
         dataDisplay.text = string.Empty;
         CheckPreOrder(treeSpawning.RootNodo);
-        dataDisplay.text.Remove(dataDisplay.text.Length - 1);
+        string newText = dataDisplay.text.Remove(dataDisplay.text.Length - 1);
+        dataDisplay.text = newText;
     }
 
     void SearchByInOrder() 
     {
         dataDisplay.text = string.Empty;
         CheckInOrder(treeSpawning.RootNodo);
-        dataDisplay.text.Remove(dataDisplay.text.Length - 1);
+        string newText = dataDisplay.text.Remove(dataDisplay.text.Length - 1);
+        dataDisplay.text = newText;
     }
 
     void SearchByPostOrder() 
     {
         dataDisplay.text = string.Empty;
         CheckPostOrder(treeSpawning.RootNodo);
-        dataDisplay.text.Remove(dataDisplay.text.Length - 1);
+        string newText = dataDisplay.text.Remove(dataDisplay.text.Length - 1);
+        dataDisplay.text = newText;
     }
 
     void CheckPreOrder(Nodo nodo) 
