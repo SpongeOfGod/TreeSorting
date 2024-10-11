@@ -423,7 +423,6 @@ GameObject:
   - component: {fileID: 1207522007}
   - component: {fileID: 1207522010}
   - component: {fileID: 1207522009}
-  - component: {fileID: 1207522008}
   - component: {fileID: 1207522011}
   m_Layer: 5
   m_Name: RawImage
@@ -446,35 +445,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 503916655}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.99994, y: -87.20001}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -157}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1207522008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207522006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 228
-    m_Top: 621
-    m_Bottom: 333
-  m_ChildAlignment: 4
-  m_StartCorner: 0
-  m_StartAxis: 1
-  m_CellSize: {x: 100.12, y: 100}
-  m_Spacing: {x: 126.3, y: 75.9}
-  m_Constraint: 0
-  m_ConstraintCount: 2
 --- !u!114 &1207522009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,6 +499,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataList: 140000000a000000010000001a0000002300000028000000120000000c0000000f0000000e0000001e00000017000000
   NodoPrefab: {fileID: 28089633261478029, guid: 7d6b913ffa721a64da76fe21208d1801, type: 3}
+  posX: -114
+  posXm: 114
+  posY: -144
+  depth: 0
+  offsetMultiplier: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

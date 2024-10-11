@@ -7,7 +7,7 @@ public class Nodo : MonoBehaviour
 {
     public Nodo izq, der;
     public int dato;
-    public Transform parent;
+    public Nodo parent;
     [SerializeField] private TextMeshProUGUI dataText;
     private void Start()
     {
@@ -18,13 +18,15 @@ public class Nodo : MonoBehaviour
         this.izq = izq;
         this.der = der;
         this.dato = dato;
+        parent = null;
     }
 
-    public void AssignData(int dato, Nodo izq, Nodo der) 
+    public void AssignData(int dato, Nodo izq, Nodo der, Nodo parent) 
     {
         this.izq = izq;
         this.der = der;
         this.dato = dato;
+        this.parent = parent;
         dataText.text = dato.ToString();
     }
 }
