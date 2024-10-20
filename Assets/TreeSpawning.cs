@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +29,7 @@ public class TreeSpawning : MonoBehaviour
                 rootAssigned = true;
                 Nodo root = Instantiate(NodoPrefab, transform);
                 root.gameObject.name = "Root";
-                root.AssignData(dataList[0], null, null, null);
+                root.AssignData(dataList[0], null, null, null, 0);
                 nodos.Enqueue(root);
                 rootNodo = root;
             }
@@ -46,8 +47,8 @@ public class TreeSpawning : MonoBehaviour
             if (nodo.izq == null) 
             {
                 nodo.izq = Instantiate(NodoPrefab, nodo.transform);
-                nodo.izq.name = "Left";
-                nodo.izq.AssignData(data, null, null, nodo);
+                nodo.izq.name = data.ToString();
+                nodo.izq.AssignData(data, null, null, nodo, depth);
                 nodo.izq.GetComponent<RectTransform>().anchoredPosition = new Vector2(posX * (offsetMultiplier/ (depth + 1)), posY);
                 return;
             }
@@ -65,8 +66,8 @@ public class TreeSpawning : MonoBehaviour
             if (nodo.der == null)
             {
                 nodo.der = Instantiate(NodoPrefab, nodo.transform);
-                nodo.der.name = "Right";
-                nodo.der.AssignData(data, null, null, nodo);
+                nodo.der.name = data.ToString();
+                nodo.der.AssignData(data, null, null, nodo, depth);
                 nodo.der.GetComponent<RectTransform>().anchoredPosition = new Vector2(posXm * (offsetMultiplier / (depth + 1)), posY);
                 return;
             }
