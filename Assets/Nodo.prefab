@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -7919814956182618887}
   - component: {fileID: 655605522112568217}
   - component: {fileID: -5829896200509002873}
+  - component: {fileID: 7011902654726122498}
   m_Layer: 5
   m_Name: Nodo
   m_TagString: Untagged
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1e8e602c6b55a4cbd33bcd920643b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Seconds: 1
   leftPosX: -114
   rightPosX: 114
   posY: -144
@@ -287,3 +289,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 51.2
+--- !u!114 &7011902654726122498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4021294513049730059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3c18ea2d30d154391866a5e53c23fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 7339317357731264656, guid: 30d8c04f8fdd81a47b203a86382fe397, type: 3}
+  lineParent: {fileID: 0}
+  points: []

@@ -15,10 +15,14 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private Nodo parent;
     [SerializeField] Nodo p;
     [SerializeField] Nodo q;
+
+    private Color originalColor;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         nodo = GetComponent<Nodo>();
+        originalColor = spriteRenderer.color;
     }
 
     public void OnPointerEnter(PointerEventData data) 
@@ -28,7 +32,7 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerExit(PointerEventData data)
     {
-        spriteRenderer.color = Color.white;
+        spriteRenderer.color = originalColor;
     }
 
     int CheckDepth(Nodo nodo)
