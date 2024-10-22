@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -7919814956182618887}
   - component: {fileID: 655605522112568217}
   - component: {fileID: -5829896200509002873}
-  - component: {fileID: 7011902654726122498}
+  - component: {fileID: 7878038856465919128}
   m_Layer: 5
   m_Name: Nodo
   m_TagString: Untagged
@@ -289,7 +289,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 51.2
---- !u!114 &7011902654726122498
+--- !u!114 &7878038856465919128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -302,5 +302,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 7339317357731264656, guid: 30d8c04f8fdd81a47b203a86382fe397, type: 3}
-  lineParent: {fileID: 0}
   points: []

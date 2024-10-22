@@ -6,7 +6,7 @@ public class DrawLine : MonoBehaviour
     public List<Transform> points = new List<Transform>();
 
     private LineRenderer lineInstance;
-    private GameObject parentObject;
+    private GameObject parentObject = null;
 
     void Start()
     {
@@ -18,12 +18,15 @@ public class DrawLine : MonoBehaviour
     }
     void Update()
     {
-        if (parentObject != null && lineInstance != null)
+        if (parentObject != gameObject.transform.parent && lineInstance != null)
         {
+            parentObject = gameObject.transform.parent?.gameObject;
             lineInstance.positionCount = points.Count;
             points.Clear();
+
             points.Add(parentObject.transform);
             points.Add(gameObject.transform);
+
             for (int i = 0; i < points.Count; i++)
             {
                 lineInstance.SetPosition(i, points[i].position);
@@ -31,7 +34,6 @@ public class DrawLine : MonoBehaviour
         }
         else
         {
-            parentObject = gameObject.transform.parent?.gameObject;
             if (parentObject == null)
             {
                 Debug.Log(gameObject + " es la raíz o sucedió un error.");

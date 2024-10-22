@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class ConjuntoTDA<T> : MonoBehaviour
 {
+    public T[] ints = new T[10];
+
     public abstract void Add(T item);
     public abstract void Remove(T item);
     public abstract bool Contains(T item);

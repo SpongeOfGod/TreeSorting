@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,6 +15,8 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] Nodo p;
     [SerializeField] Nodo q;
 
+
+    bool doubleRotation;
     private Color originalColor;
 
     void Start()
@@ -45,7 +46,7 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerClick(PointerEventData data) 
     {
         spriteRenderer.color = Color.green;
-        if (data.button.ToString() == "Right")
+        if (data.button.ToString() == "Right" && !doubleRotation)
         {
             int balance = CheckDepth(nodo.der) - CheckDepth(nodo.izq);
 
@@ -74,7 +75,7 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
             }
         }
 
-        if (data.button.ToString() == "Left") 
+        if (data.button.ToString() == "Left" && !doubleRotation) 
         {
             p = nodo;
             q = p.der;
@@ -120,7 +121,6 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         if (nodoGrab != null)
         {
-            //Debug.Log(nodoGrab.dato);
             nodoGrab.GetComponent<RectTransform>().anchoredPosition = new Vector2(posX * (offsetMultiplier / (depth + 1)), posY);
         }
     }
@@ -132,32 +132,17 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (tempQ.der != null) // Si el nodo derecho de Q no es nulo, se lo asigna a P como nodo izquierdo
         {
             ReOrderNodeToLeft(tempQ, tempQ.der);
-            //tempP.parent.der = tempQ.der;
-            //tempQ.der.parent = tempP;
-            //tempQ.der.transform.parent = tempP.transform;
-            //tempQ.der.depth = tempQ.depth + 1;
-            //newPos(tempQ.der, leftPosX, tempP.depth);
         }
 
         if (tempP.parent.der == tempP && !assigned)
         {
             ReOrderNodeToRight(tempP, tempQ);
-            //tempP.parent.der = tempQ;
-            //tempP.parent.der.parent = tempQ;
-            //tempP.parent.der.transform.parent = tempP.parent.transform;
-            //tempP.parent.der.depth = tempP.parent.depth + 1;
-            //newPos(tempP.parent.der, rightPosX, tempP.parent.der.depth);
             assigned = true;
         }
 
         if (tempP.parent.izq == tempP && !assigned)
         {
             ReOrderNodeToLeft(tempP, tempQ);
-            //tempP.parent.izq = tempQ;
-            //tempP.parent.izq.parent = tempQ;
-            //tempP.parent.izq.transform.parent = tempP.parent.transform;
-            //tempP.parent.izq.depth = tempP.parent.depth + 1;
-            //newPos(tempP.parent.izq, leftPosX, tempP.parent.izq.depth);
             assigned = true;
         }
 
@@ -184,32 +169,17 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (tempQ.izq != null)
         {
             ReOrderNodeToRight(tempQ, tempQ.izq);
-            //tempP.parent.izq = tempQ.izq;
-            //tempQ.izq.parent = tempP;
-            //tempQ.izq.transform.parent = tempP.transform;
-            //tempQ.izq.depth = tempQ.depth + 1;
-            //newPos(tempQ.der, rightPosX, tempP.depth);
         }
 
         if (tempP.parent.izq == tempP && !assigned)
         {
             ReOrderNodeToLeft(tempP, tempQ);
-            //tempP.parent.izq = tempQ;
-            //tempP.parent.izq.parent = tempQ;
-            //tempP.parent.izq.transform.parent = tempP.parent.transform;
-            //tempP.parent.izq.depth = tempP.parent.depth + 1;
-            //newPos(tempP.parent.izq, leftPosX, tempP.parent.izq.depth);
             assigned = true;
         }
 
         if (tempP.parent.der == tempP && !assigned)
         {
             ReOrderNodeToRight(tempP, tempQ);
-            //tempP.parent.der = tempQ;
-            //tempP.parent.der.parent = tempQ;
-            //tempP.parent.der.transform.parent = tempP.parent.transform;
-            //tempP.parent.der.depth = tempP.parent.depth + 1;
-            //newPos(tempP.parent.der, rightPosX, tempP.parent.der.depth);
             assigned = true;
         }
 
@@ -238,12 +208,6 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
         newPos(parentNode.parent.der, rightPosX, parentNode.parent.der.depth);
     }
 
-    //tempP.parent.der = tempQ;
-    //tempP.parent.der.parent = tempQ;
-    //tempP.parent.der.transform.parent = tempP.parent.transform;
-    //tempP.parent.der.depth = tempP.parent.depth + 1;
-    //newPos(tempP.parent.der, rightPosX, tempP.parent.der.depth);
-
     public void ReOrderNodeToLeft(Nodo parentNode, Nodo node)
     {
         parentNode.parent.izq = node;
@@ -254,13 +218,17 @@ public class RotationManager : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
     IEnumerator DelayOrderLeft() 
     {
+        doubleRotation = true;
         yield return new WaitForSeconds(Seconds);
         RotacionIzquierda(q, p);
+        doubleRotation = false;
     }
 
     IEnumerator DelayOrderRight()
     {
+        doubleRotation = true;
         yield return new WaitForSeconds(Seconds);
         RotacionDerecha(q, p);
+        doubleRotation = false;
     }
 }

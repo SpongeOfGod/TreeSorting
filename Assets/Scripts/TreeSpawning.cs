@@ -35,9 +35,6 @@ public class TreeSpawning : MonoBehaviour
             }
         }
     }
-    void Start()
-    {
-    }
 
     private void SearchInside(int data, Nodo nodo) 
     {

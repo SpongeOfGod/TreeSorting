@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ConjuntoEstatico : ConjuntoTDA<int>
 {
-    public int[] ints = new int[10];
     public int indexTemp = 0;
     public override void Add(int item) 
     {
