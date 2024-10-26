@@ -1,11 +1,12 @@
-using System;
+using EnClase;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TreeSpawning : MonoBehaviour
 {
     [SerializeField] List<int> dataList;
-    [SerializeField] Nodo NodoPrefab;
+    [SerializeField] List<Nodo> nodeList = new List<Nodo>();
+    [SerializeField] VisualNode NodoPrefab;
     [SerializeField] Queue<Nodo> nodos = new Queue<Nodo>();
     bool rootAssigned = false;
     Nodo rootNodo;
@@ -14,9 +15,11 @@ public class TreeSpawning : MonoBehaviour
     [SerializeField] float posY;
     [SerializeField] int depth = 0;
     [SerializeField] float offsetMultiplier;
+    RotationManager rotationManager;
 
     private void Awake()
     {
+        rotationManager = GetComponent<RotationManager>();
         for (int i = 0; i < dataList.Count; i++) 
         {
             if (rootAssigned) 
@@ -27,11 +30,23 @@ public class TreeSpawning : MonoBehaviour
             else 
             {
                 rootAssigned = true;
-                Nodo root = Instantiate(NodoPrefab, transform);
-                root.gameObject.name = "Root";
+                VisualNode visualnode = Instantiate(NodoPrefab, transform);
+                Nodo root = visualnode.Nodo;
+                visualnode.gameObject.name = "Root";
                 root.AssignData(dataList[0], null, null, null, 0);
                 nodos.Enqueue(root);
                 rootNodo = root;
+            }
+        }
+        rotationManager.rotationOcurred = true;
+        while (rotationManager.rotationOcurred) 
+        {
+            Debug.Log("Rotation");
+            rotationManager.rotationOcurred = false;
+
+            foreach (Nodo node in nodeList) 
+            {
+                rotationManager.CheckRotations(node);
             }
         }
     }
@@ -40,13 +55,15 @@ public class TreeSpawning : MonoBehaviour
     {
         if(data < nodo.dato) 
         {
-            Debug.Log($"{data} < {nodo.dato}");
+            //Debug.Log($"{data} < {nodo.dato}");
             if (nodo.izq == null) 
             {
-                nodo.izq = Instantiate(NodoPrefab, nodo.transform);
-                nodo.izq.name = data.ToString();
+                VisualNode visualnode = Instantiate(NodoPrefab, nodo.visualNode.transform);
+                nodo.izq = visualnode.Nodo;
+                visualnode.name = data.ToString();
                 nodo.izq.AssignData(data, null, null, nodo, depth);
-                nodo.izq.GetComponent<RectTransform>().anchoredPosition = new Vector2(posX * (offsetMultiplier/ (depth + 1)), posY);
+                visualnode.GetComponent<RectTransform>().anchoredPosition = new Vector2(posX * (offsetMultiplier/ (depth + 1)), posY);
+                nodeList.Add(nodo.izq);
                 return;
             }
             else
@@ -59,13 +76,16 @@ public class TreeSpawning : MonoBehaviour
 
         if (data > nodo.dato)
         {
-            Debug.Log($"{data} > {nodo.dato}");
+            //Debug.Log($"{data} > {nodo.dato}");
             if (nodo.der == null)
             {
-                nodo.der = Instantiate(NodoPrefab, nodo.transform);
-                nodo.der.name = data.ToString();
+                VisualNode visualnode = Instantiate(NodoPrefab, nodo.visualNode.transform);
+
+                nodo.der = visualnode.Nodo;
+                visualnode.name = data.ToString();
                 nodo.der.AssignData(data, null, null, nodo, depth);
-                nodo.der.GetComponent<RectTransform>().anchoredPosition = new Vector2(posXm * (offsetMultiplier / (depth + 1)), posY);
+                visualnode.GetComponent<RectTransform>().anchoredPosition = new Vector2(posXm * (offsetMultiplier / (depth + 1)), posY);
+                nodeList.Add(nodo.der);
                 return;
             }
             else

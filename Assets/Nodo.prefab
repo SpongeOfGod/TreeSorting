@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 8319037609642817954}
   - component: {fileID: 8701739798745095945}
   - component: {fileID: 3082856376488062872}
-  - component: {fileID: 28089633261478029}
   - component: {fileID: 739145983501149476}
+  - component: {fileID: 4970839455552211616}
   - component: {fileID: -7919814956182618887}
   - component: {fileID: 655605522112568217}
-  - component: {fileID: -5829896200509002873}
   - component: {fileID: 7878038856465919128}
+  - component: {fileID: -5829896200509002873}
   m_Layer: 5
   m_Name: Nodo
   m_TagString: Untagged
@@ -103,24 +103,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &28089633261478029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4021294513049730059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad31c3c6f0d8c946930d85fd6f63275, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  izq: {fileID: 0}
-  der: {fileID: 0}
-  dato: 0
-  parent: {fileID: 0}
-  dataText: {fileID: 655605522112568217}
-  depth: 0
 --- !u!114 &739145983501149476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +127,20 @@ MonoBehaviour:
   m_Spacing: {x: 126.3, y: 75.9}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &4970839455552211616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4021294513049730059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe1095c0cbd83e419498621894d0085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DataText: {fileID: 0}
+  Sprite: {fileID: 0}
 --- !u!114 &-7919814956182618887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,10 +157,9 @@ MonoBehaviour:
   leftPosX: -114
   rightPosX: 114
   posY: -144
-  nodo: {fileID: 0}
+  visualNode: {fileID: 0}
   offsetMultiplier: 3
-  p: {fileID: 0}
-  q: {fileID: 0}
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &655605522112568217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +249,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7878038856465919128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4021294513049730059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3c18ea2d30d154391866a5e53c23fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 7339317357731264656, guid: 30d8c04f8fdd81a47b203a86382fe397, type: 3}
+  points: []
 --- !u!58 &-5829896200509002873
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -289,17 +298,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 51.2
---- !u!114 &7878038856465919128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4021294513049730059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a3c18ea2d30d154391866a5e53c23fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  linePrefab: {fileID: 7339317357731264656, guid: 30d8c04f8fdd81a47b203a86382fe397, type: 3}
-  points: []
