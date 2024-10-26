@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ConjuntoTDA<T> : MonoBehaviour
+public abstract class ConjuntoTDAEstatico<T>
 {
     public T[] ints = new T[10];
 
@@ -13,7 +13,7 @@ public abstract class ConjuntoTDA<T> : MonoBehaviour
     public abstract int Cardinality();
     public abstract bool isEmpty();
 
-    //public abstract ConjuntoTDA<T> Union(ConjuntoTDA<T> otherSet);
-    //public abstract ConjuntoTDA<T> Intersection(ConjuntoTDA<T> otherSet);
-    //public abstract ConjuntoTDA<T> Difference(ConjuntoTDA<T> otherSet);
+    public abstract ConjuntoTDAEstatico<T> Union(ConjuntoTDAEstatico<T> otherSet);
+    public abstract ConjuntoTDAEstatico<T> Intersection(ConjuntoTDAEstatico<T> otherSet);
+    public abstract ConjuntoTDAEstatico<T> Difference(ConjuntoTDAEstatico<T> otherSet);
 }

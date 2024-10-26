@@ -1,7 +1,8 @@
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class ConjuntoEstatico : ConjuntoTDA<int>
+public class ConjuntoEstatico : ConjuntoTDAEstatico<int>
 {
     public int indexTemp = 0;
     public override void Add(int item) 
@@ -72,27 +73,66 @@ public class ConjuntoEstatico : ConjuntoTDA<int>
         return ints.Length <= 0;
     }
 
-    //public override ConjuntoTDA<int> Union(ConjuntoTDA<int> otherSet) 
-    //{
-    //    int[] tempArray = new int[otherSet.Cardinality()];
+    public override ConjuntoTDAEstatico<int> Union(ConjuntoTDAEstatico<int> otherSet)
+    {
 
-    //    int index = 0;
+        ConjuntoEstatico conjuntoNuevo = new ConjuntoEstatico();
 
-    //    while (index < tempArray.Length) 
-    //    {
-    //        ints.
-    //        tempArray[index] = (otherSet.Show());
-    //    }
+        for (int i = 0; i < 10; i++)
+        {
+            int itemA = ints[i];
+            int itemB = 0;
 
-    //    ints.Union(otherSet)
-    //}
-    //public override ConjuntoTDA<int> Intersection(ConjuntoTDA<int> otherSet) 
-    //{
+            for (int j = i + 1; j < 10; j++) 
+            {
+                itemB = otherSet.ints[j];
+                if (itemA > itemB) 
+                {
+                    conjuntoNuevo.Add(itemA);
+                }
+                else 
+                {
+                    conjuntoNuevo.Add(itemB);
+                }
+            }
+        }
 
-    //}
-    //public override ConjuntoTDA<int> Difference(ConjuntoTDA<int> otherSet)
-    //{
-    //    ConjuntoEstatico conjuntoTemp = new ConjuntoEstatico();
-    //    if (conjuntoTemp.Contains())
-    //}
+        return conjuntoNuevo;
+    }
+    public override ConjuntoTDAEstatico<int> Intersection(ConjuntoTDAEstatico<int> otherSet)
+    {
+
+        ConjuntoEstatico conjuntoNuevo = new ConjuntoEstatico();
+
+        foreach (int item in ints)
+        {
+            if (otherSet.Contains(item))
+            {
+                conjuntoNuevo.Add(item);
+            }
+        }
+
+        return conjuntoNuevo;
+    }
+    public override ConjuntoTDAEstatico<int> Difference(ConjuntoTDAEstatico<int> otherSet)
+    {
+        ConjuntoEstatico conjuntoNuevo = new ConjuntoEstatico();
+
+        foreach (int item in ints)
+        {
+            if (!otherSet.Contains(item))
+            {
+                conjuntoNuevo.Add(item);
+            }
+        }
+        foreach (int item in otherSet.ints) 
+        {
+            if (!Contains(item))
+            {
+                conjuntoNuevo.Add(item);
+            }
+        }
+
+        return conjuntoNuevo;
+    }
 }

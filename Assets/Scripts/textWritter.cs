@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class textWritter : MonoBehaviour
+public class TextWritter : MonoBehaviour
 {
-    ConjuntoEstatico conjuntoEstatico;
+    public ConjuntoEstatico ConjuntoEstatico;
+    public ConjuntoEstatico ConjuntoPrevio;
     TextMeshProUGUI textMeshProUGUI;
     Stack<string> strings = new Stack<string>();
+    public ShowNumbers showNumbersPrefab;
+    public event Action Enter;
+    public Transform parent;
 
-    private void Start()
+    private void Awake()
     {
         textMeshProUGUI = GetComponent<TextMeshProUGUI>();
-        conjuntoEstatico = GetComponent<ConjuntoEstatico>();
+        ConjuntoEstatico = new ConjuntoEstatico();
     }
 
     private void Update()
@@ -21,13 +26,13 @@ public class textWritter : MonoBehaviour
 
         InputHandler();
 
-        if (Input.inputString != string.Empty) 
+        if (Input.inputString != string.Empty)
         {
             charWrite = Input.inputString[0];
 
-            if (charWrite == '\b') 
+            if (charWrite == '\b')
             {
-                if (strings.Count > 0) 
+                if (strings.Count > 0)
                 {
                     textMeshProUGUI.text = strings.Pop();
                     return;
@@ -36,7 +41,7 @@ public class textWritter : MonoBehaviour
         }
 
 
-        if (char.IsDigit(charWrite)) 
+        if (char.IsDigit(charWrite))
         {
             strings.Push(textMeshProUGUI.text);
             textMeshProUGUI.text += charWrite.ToString();
@@ -44,19 +49,19 @@ public class textWritter : MonoBehaviour
 
     }
 
-    public void InputHandler() 
+    public void InputHandler()
     {
         if (Input.GetKeyDown(KeyCode.A) && textMeshProUGUI.text != string.Empty)
         {
             int.TryParse(textMeshProUGUI.text, out int intString);
-            conjuntoEstatico.Add(intString);
+            ConjuntoEstatico.Add(intString);
             clearText();
         }
 
         if (Input.GetKeyDown(KeyCode.R) && textMeshProUGUI.text != string.Empty)
         {
             int.TryParse(textMeshProUGUI.text, out int intString);
-            conjuntoEstatico.Remove(intString);
+            ConjuntoEstatico.Remove(intString);
             clearText();
         }
 
@@ -64,11 +69,11 @@ public class textWritter : MonoBehaviour
         {
             int.TryParse(textMeshProUGUI.text, out int textNumber);
 
-            if (conjuntoEstatico.Contains(textNumber)) 
+            if (ConjuntoEstatico.Contains(textNumber))
             {
                 Debug.Log($"El conjunto contiene {textNumber}");
             }
-            else 
+            else
             {
                 Debug.Log($"No se ha encontrado referencia a {textNumber} en el conjunto");
             }
@@ -76,21 +81,21 @@ public class textWritter : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S) && textMeshProUGUI.text != string.Empty)
         {
-            Debug.Log($"Random Item: {conjuntoEstatico.Show()}");
+            Debug.Log($"Random Item: {ConjuntoEstatico.Show()}");
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log($"Longitud del conjunto: {conjuntoEstatico.Cardinality()}");
+            Debug.Log($"Longitud del conjunto: {ConjuntoEstatico.Cardinality()}");
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (conjuntoEstatico.isEmpty()) 
+            if (ConjuntoEstatico.isEmpty())
             {
                 Debug.Log("El conjunto esta vacío");
             }
-            else 
+            else
             {
                 Debug.Log("El conjunto no esta vacío");
             }
@@ -99,6 +104,7 @@ public class textWritter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U) && textMeshProUGUI.text != string.Empty)
         {
             //
+
         }
 
         if (Input.GetKeyDown(KeyCode.I) && textMeshProUGUI.text != string.Empty)
@@ -110,9 +116,18 @@ public class textWritter : MonoBehaviour
         {
             //
         }
+
+        if (Input.GetKeyDown(KeyCode.Return) && ConjuntoPrevio == null)
+        {
+            Enter.Invoke();
+            ConjuntoPrevio = ConjuntoEstatico;
+            ConjuntoEstatico = new ConjuntoEstatico();
+            ShowNumbers showObject = Instantiate(showNumbersPrefab, parent);
+            showObject.textWritter = this;
+        }
     }
 
-    public void clearText() 
+    public void clearText()
     {
         textMeshProUGUI.text = string.Empty;
     }
