@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ConjuntoTDAEstatico<T>
+public abstract class ConjuntoTDA<T>
 {
     public T[] ints = new T[10];
+    public List<T> intList = new List<T>();
+    public bool isDinamic;
 
     public abstract void Add(T item);
     public abstract void Remove(T item);
@@ -13,7 +15,7 @@ public abstract class ConjuntoTDAEstatico<T>
     public abstract int Cardinality();
     public abstract bool isEmpty();
 
-    public abstract ConjuntoTDAEstatico<T> Union(ConjuntoTDAEstatico<T> otherSet);
-    public abstract ConjuntoTDAEstatico<T> Intersection(ConjuntoTDAEstatico<T> otherSet);
-    public abstract ConjuntoTDAEstatico<T> Difference(ConjuntoTDAEstatico<T> otherSet);
+    public abstract ConjuntoTDA<T> Union(ConjuntoTDA<T> otherSet);
+    public abstract ConjuntoTDA<T> Intersection(ConjuntoTDA<T> otherSet);
+    public abstract ConjuntoTDA<T> Difference(ConjuntoTDA<T> otherSet);
 }

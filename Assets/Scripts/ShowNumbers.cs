@@ -5,19 +5,19 @@ using UnityEngine;
 
 public class ShowNumbers : MonoBehaviour
 {
-    [SerializeField] ConjuntoEstatico conjuntoEstatico;
+    [SerializeField] ConjuntoDinamico conjuntoEstatico;
     public TextWritter textWritter;
     TextMeshProUGUI textUI;
     public bool deattach;
-    [SerializeField] Transform parent;
     void Start()
     {
         textUI = GetComponent<TextMeshProUGUI>();
         if (textWritter != null) 
         {
-            conjuntoEstatico = textWritter.ConjuntoEstatico;
+            conjuntoEstatico = textWritter.Conjunto;
         }
         textWritter.Enter += Deattachment;
+        textWritter.NuevoConjunto += NuevoConjunto;
     }
 
     void Update()
@@ -34,7 +34,7 @@ public class ShowNumbers : MonoBehaviour
             textUI.text = textToShow;
         }
 
-        if (conjuntoEstatico == null) 
+        if (deattach && textWritter.ConjuntoPrevio == null) 
         {
             Destroy(gameObject);
         }
@@ -44,7 +44,18 @@ public class ShowNumbers : MonoBehaviour
     {
         deattach = true;
         textUI.color = Color.red;
-        transform.parent = parent;
-        transform.position = Vector3.zero;
+        transform.parent = textWritter.PreviousParentShow;
+        GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+    }
+
+    public void NuevoConjunto() 
+    {
+        conjuntoEstatico = textWritter.Conjunto;
+    }
+
+    private void OnDestroy()
+    {
+        textWritter.NuevoConjunto -= NuevoConjunto;
+        textWritter.Enter -= Deattachment;
     }
 }

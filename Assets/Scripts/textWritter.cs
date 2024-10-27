@@ -6,18 +6,21 @@ using UnityEngine;
 
 public class TextWritter : MonoBehaviour
 {
-    public ConjuntoEstatico ConjuntoEstatico;
-    public ConjuntoEstatico ConjuntoPrevio;
+    public ConjuntoDinamico Conjunto;
+    public ConjuntoDinamico ConjuntoPrevio;
     TextMeshProUGUI textMeshProUGUI;
     Stack<string> strings = new Stack<string>();
     public ShowNumbers showNumbersPrefab;
     public event Action Enter;
-    public Transform parent;
+    public event Action NuevoConjunto;
+    public event Action changeGroupingType;
+    public Transform CurrentParentShow;
+    public Transform PreviousParentShow;
 
     private void Awake()
     {
         textMeshProUGUI = GetComponent<TextMeshProUGUI>();
-        ConjuntoEstatico = new ConjuntoEstatico();
+        Conjunto = new ConjuntoDinamico();
     }
 
     private void Update()
@@ -54,14 +57,14 @@ public class TextWritter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) && textMeshProUGUI.text != string.Empty)
         {
             int.TryParse(textMeshProUGUI.text, out int intString);
-            ConjuntoEstatico.Add(intString);
+            Conjunto.Add(intString);
             clearText();
         }
 
         if (Input.GetKeyDown(KeyCode.R) && textMeshProUGUI.text != string.Empty)
         {
             int.TryParse(textMeshProUGUI.text, out int intString);
-            ConjuntoEstatico.Remove(intString);
+            Conjunto.Remove(intString);
             clearText();
         }
 
@@ -69,7 +72,7 @@ public class TextWritter : MonoBehaviour
         {
             int.TryParse(textMeshProUGUI.text, out int textNumber);
 
-            if (ConjuntoEstatico.Contains(textNumber))
+            if (Conjunto.Contains(textNumber))
             {
                 Debug.Log($"El conjunto contiene {textNumber}");
             }
@@ -81,17 +84,17 @@ public class TextWritter : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S) && textMeshProUGUI.text != string.Empty)
         {
-            Debug.Log($"Random Item: {ConjuntoEstatico.Show()}");
+            Debug.Log($"Random Item: {Conjunto.Show()}");
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log($"Longitud del conjunto: {ConjuntoEstatico.Cardinality()}");
+            Debug.Log($"Longitud del conjunto: {Conjunto.Cardinality()}");
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (ConjuntoEstatico.isEmpty())
+            if (Conjunto.isEmpty())
             {
                 Debug.Log("El conjunto esta vacío");
             }
@@ -101,29 +104,51 @@ public class TextWritter : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.U) && textMeshProUGUI.text != string.Empty)
+        if (Input.GetKeyDown(KeyCode.U) && ConjuntoPrevio != null)
         {
-            //
-
+            ConjuntoDinamico conjunto = (ConjuntoDinamico)Conjunto.Union(ConjuntoPrevio);
+            Conjunto = conjunto;
+            ConjuntoPrevio = null;
+            NuevoConjunto.Invoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.I) && textMeshProUGUI.text != string.Empty)
+        if (Input.GetKeyDown(KeyCode.I) && ConjuntoPrevio != null)
         {
-            //
+            ConjuntoDinamico conjunto = (ConjuntoDinamico)Conjunto.Intersection(ConjuntoPrevio);
+            Conjunto = conjunto;
+            ConjuntoPrevio = null;
+            NuevoConjunto.Invoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.D) && textMeshProUGUI.text != string.Empty)
+        if (Input.GetKeyDown(KeyCode.D) && ConjuntoPrevio != null)
         {
-            //
+            ConjuntoDinamico conjunto = (ConjuntoDinamico)Conjunto.Difference(ConjuntoPrevio);
+            Conjunto = conjunto;
+            ConjuntoPrevio = null;
+            NuevoConjunto.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.Return) && ConjuntoPrevio == null)
         {
             Enter.Invoke();
-            ConjuntoPrevio = ConjuntoEstatico;
-            ConjuntoEstatico = new ConjuntoEstatico();
-            ShowNumbers showObject = Instantiate(showNumbersPrefab, parent);
+            ConjuntoPrevio = Conjunto;
+            Conjunto = new ConjuntoDinamico();
+            Conjunto.isDinamic = ConjuntoPrevio.isDinamic;
+            ShowNumbers showObject = Instantiate(showNumbersPrefab, CurrentParentShow);
             showObject.textWritter = this;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab)) 
+        {
+            if (Conjunto.isDinamic) 
+            {
+                Conjunto.SetToArray();
+            }
+            else 
+            {
+                Conjunto.SetToList();
+            }
+            changeGroupingType.Invoke();
         }
     }
 

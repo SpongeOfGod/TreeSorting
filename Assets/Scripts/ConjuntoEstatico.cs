@@ -2,7 +2,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ConjuntoEstatico : ConjuntoTDAEstatico<int>
+public class ConjuntoEstatico : ConjuntoTDA<int>
 {
     public int indexTemp = 0;
     public override void Add(int item) 
@@ -13,7 +13,7 @@ public class ConjuntoEstatico : ConjuntoTDAEstatico<int>
             indexTemp++;
         }
 
-        if (indexTemp >= ints.Length) 
+        if (indexTemp !>= ints.Length) 
         {
             indexTemp = 0;
         }
@@ -73,33 +73,35 @@ public class ConjuntoEstatico : ConjuntoTDAEstatico<int>
         return ints.Length <= 0;
     }
 
-    public override ConjuntoTDAEstatico<int> Union(ConjuntoTDAEstatico<int> otherSet)
+    public override ConjuntoTDA<int> Union(ConjuntoTDA<int> otherSet)
     {
 
         ConjuntoEstatico conjuntoNuevo = new ConjuntoEstatico();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < ints.Length; i++)
         {
             int itemA = ints[i];
             int itemB = 0;
 
-            for (int j = i + 1; j < 10; j++) 
+            for (int j = i; j < otherSet.ints.Length; j++) 
             {
                 itemB = otherSet.ints[j];
                 if (itemA > itemB) 
                 {
                     conjuntoNuevo.Add(itemA);
+                    break;
                 }
                 else 
                 {
                     conjuntoNuevo.Add(itemB);
+                    break;
                 }
             }
         }
 
         return conjuntoNuevo;
     }
-    public override ConjuntoTDAEstatico<int> Intersection(ConjuntoTDAEstatico<int> otherSet)
+    public override ConjuntoTDA<int> Intersection(ConjuntoTDA<int> otherSet)
     {
 
         ConjuntoEstatico conjuntoNuevo = new ConjuntoEstatico();
@@ -114,7 +116,7 @@ public class ConjuntoEstatico : ConjuntoTDAEstatico<int>
 
         return conjuntoNuevo;
     }
-    public override ConjuntoTDAEstatico<int> Difference(ConjuntoTDAEstatico<int> otherSet)
+    public override ConjuntoTDA<int> Difference(ConjuntoTDA<int> otherSet)
     {
         ConjuntoEstatico conjuntoNuevo = new ConjuntoEstatico();
 
