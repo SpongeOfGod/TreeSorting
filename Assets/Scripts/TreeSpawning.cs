@@ -1,5 +1,6 @@
 using EnClase;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class TreeSpawning : MonoBehaviour
@@ -43,10 +44,16 @@ public class TreeSpawning : MonoBehaviour
         {
             Debug.Log("Rotation");
             rotationManager.rotationOcurred = false;
+            
 
             foreach (Nodo node in nodeList) 
             {
                 rotationManager.CheckRotations(node);
+            }
+
+            for (int i = nodeList.Count - 1; i > 0; i--) 
+            {
+                rotationManager.CheckRotations(nodeList[i]);
             }
         }
     }

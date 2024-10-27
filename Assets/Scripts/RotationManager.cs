@@ -56,6 +56,7 @@ public class RotationManager : MonoBehaviour
         else if (balance > 1 && balanceSubRight < 0)
         {
             Debug.Log("Doble Rotación Izquierda");
+            rotationOcurred = true;
             RotacionDerecha(q.izq, q);
             RotacionIzquierda(q, p);
             //StartCoroutine(DelayOrderLeft(p.der, p));
@@ -82,11 +83,13 @@ public class RotationManager : MonoBehaviour
         if (balance < -1 && balanceSubLeft <= 0)
         {
             Debug.Log("Rotación Simple Derecha");
+            rotationOcurred = true;
             RotacionDerecha(q, p);
         }
         else if (balance < -1 && balanceSubLeft > 0)
         {
             Debug.Log("Doble Rotación Derecha");
+            rotationOcurred = true;
             RotacionIzquierda(q.der, q);
             RotacionDerecha(q, p);
             //StartCoroutine(DelayOrderRight(p.izq, p));
