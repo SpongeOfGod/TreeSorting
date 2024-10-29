@@ -1,44 +1,54 @@
 using UnityEngine;
-using System.Collections.Generic;
+
 public class DrawLine : MonoBehaviour
 {
     public GameObject linePrefab;
-    public List<Transform> points = new List<Transform>();
-
     private LineRenderer lineInstance;
-    private GameObject parentObject = null;
+    private Transform parentTransform;
 
     void Start()
     {
         if (linePrefab != null)
         {
-            GameObject lineRendererObject = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, gameObject.transform);
+            GameObject lineRendererObject = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, transform);
             lineInstance = lineRendererObject.GetComponent<LineRenderer>();
+            parentTransform = transform.parent;
+
+            if (lineInstance != null)
+            {
+                lineInstance.positionCount = 2;
+                UpdateLinePositions();
+            }
         }
     }
+
     void Update()
     {
-        if (parentObject != gameObject.transform.parent && lineInstance != null)
+        if (transform.parent != parentTransform)
         {
-            parentObject = gameObject.transform.parent?.gameObject;
-            lineInstance.positionCount = points.Count;
-            points.Clear();
+            parentTransform = transform.parent;
 
-            points.Add(parentObject.transform);
-            points.Add(gameObject.transform);
-
-            for (int i = 0; i < points.Count; i++)
+            if (parentTransform == null)
             {
-                lineInstance.SetPosition(i, points[i].position);
-            }
-        }
-        else
-        {
-            if (parentObject == null)
-            {
-                Debug.Log(gameObject + " es la raíz o sucedió un error.");
+                Debug.LogWarning(gameObject + " es la raíz o no tiene padre.");
                 Destroy(this);
+                return;
             }
+
+            UpdateLinePositions();
+        }
+    }
+
+    void UpdateLinePositions()
+    {
+        if (lineInstance != null && parentTransform != null)
+        {
+            if (lineInstance.positionCount != 2)
+            {
+                lineInstance.positionCount = 2;
+            }
+            lineInstance.SetPosition(0, parentTransform.position);
+            lineInstance.SetPosition(1, transform.position);
         }
     }
 }
