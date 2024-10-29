@@ -39,21 +39,24 @@ public class TreeSpawning : MonoBehaviour
                 rootNodo = root;
             }
         }
-        rotationManager.rotationOcurred = true;
-        while (rotationManager.rotationOcurred) 
+        if (rotationManager.enabled) 
         {
-            Debug.Log("Rotation");
-            rotationManager.rotationOcurred = false;
+            rotationManager.rotationOcurred = true;
+            while (rotationManager.rotationOcurred) 
+            {
+                Debug.Log("Rotation");
+                rotationManager.rotationOcurred = false;
             
 
-            foreach (Nodo node in nodeList) 
-            {
-                rotationManager.CheckRotations(node);
-            }
+                foreach (Nodo node in nodeList) 
+                {
+                    rotationManager.CheckRotations(node);
+                }
 
-            for (int i = nodeList.Count - 1; i > 0; i--) 
-            {
-                rotationManager.CheckRotations(nodeList[i]);
+                for (int i = nodeList.Count - 1; i > 0; i--) 
+                {
+                    rotationManager.CheckRotations(nodeList[i]);
+                }
             }
         }
     }

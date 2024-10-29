@@ -24,7 +24,10 @@ public class RotationManager : MonoBehaviour
         return (1 + Math.Max(CheckDepth(nodo.izq), CheckDepth(nodo.der)));
     }
 
-
+    private void Update()
+    {
+        
+    }
     public void CheckRotations (Nodo nodo)
     {
         if (nodo == null) return;
