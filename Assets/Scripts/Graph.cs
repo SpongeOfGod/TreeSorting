@@ -2,7 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Graph<T> : MonoBehaviour
+[System.Serializable]
+public class Graph : MonoBehaviour
 {
-    [SerializeField] Dictionary<T, List<(T, int)>> adyacentList = new Dictionary<T, List<(T, int)>>();
+    [SerializeField] List<VerticeVisual> VerticeVisuals = new List<VerticeVisual>();
+    [SerializeField] Dictionary<Vertice, List<(Vertice, int)>> adyacentList = new Dictionary<Vertice, List<(Vertice, int)>>();
+    [SerializeField] SerializableDictionary<Arista, List<(Arista, int)>> SerializableDictionary;
+    private void Start()
+    {
+        SerializableDictionary = new SerializableDictionary<Arista, List<(Arista, int)>>();
+        //SerializableDictionary.ToDictionary()
+    }
+    public void InitNodos()
+    {
+        for (int i = 0; i < 12; i ++)
+        {
+            //adyacentList.Add(, i);
+        }
+    }
 }

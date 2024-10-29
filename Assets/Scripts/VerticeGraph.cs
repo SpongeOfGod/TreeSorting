@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VerticeGraph : Graph<Vertice>
+public class VerticeGraph 
 {
     // Start is called before the first frame update
     void Start()

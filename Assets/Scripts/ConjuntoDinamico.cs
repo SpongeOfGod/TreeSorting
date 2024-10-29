@@ -1,10 +1,7 @@
 using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
-public class ConjuntoDinamico : ConjuntoTDA<int>
+public class ConjuntoDinamico : ConjuntoTDA<int> // Hacerlo Genérico
 {
     public int indexTemp = 0;
 

@@ -2,19 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vertice : MonoBehaviour
+public class Vertice
 {
-    [SerializeField] Vertice origen;
-    [SerializeField] Vertice destiny;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<Arista> AristasEntrantes = new List<Arista>();
+    public List<Arista> AristasSalientes = new List<Arista>();
 
-    // Update is called once per frame
-    void Update()
+    private VerticeVisual verticeVisual;
+    
+    public Vertice(VerticeVisual verticeVisual) 
     {
-        
+        this.verticeVisual = verticeVisual;
     }
 }

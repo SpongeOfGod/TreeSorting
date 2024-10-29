@@ -1,6 +1,4 @@
-using EnClase;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class TreeSpawning : MonoBehaviour
@@ -9,8 +7,10 @@ public class TreeSpawning : MonoBehaviour
     [SerializeField] List<Nodo> nodeList = new List<Nodo>();
     [SerializeField] VisualNode NodoPrefab;
     [SerializeField] Queue<Nodo> nodos = new Queue<Nodo>();
+
     bool rootAssigned = false;
     Nodo rootNodo;
+    
     public Nodo RootNodo => rootNodo;
     [SerializeField] float posX, posXm;
     [SerializeField] float posY;
@@ -58,6 +58,19 @@ public class TreeSpawning : MonoBehaviour
                     rotationManager.CheckRotations(nodeList[i]);
                 }
             }
+        }
+    }
+
+    public bool push = false;
+    public int value = 0;
+
+    private void Update()
+    {
+        if(push)
+        {
+            push = false;
+
+            // Push
         }
     }
 

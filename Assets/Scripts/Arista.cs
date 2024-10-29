@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arista : MonoBehaviour
+public class Arista 
 {
-    public Vertice a;
-    public Vertice b;
-
-
+    public Vertice Origen;
+    public Vertice Destino;
+    public int Peso;
 }
