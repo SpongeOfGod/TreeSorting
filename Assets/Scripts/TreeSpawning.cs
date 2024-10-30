@@ -39,7 +39,7 @@ public class TreeSpawning : MonoBehaviour
                 rootNodo = root;
             }
         }
-        if (rotationManager.enabled) 
+        //if (rotationManager.enabled) 
         {
             rotationManager.rotationOcurred = true;
             while (rotationManager.rotationOcurred) 

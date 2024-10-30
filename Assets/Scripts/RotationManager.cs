@@ -1,22 +1,17 @@
 using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class RotationManager : MonoBehaviour
+[Serializable]
+public class RotationManager
 {
     [SerializeField] private float Seconds = 1f;
     [SerializeField] float leftPosX, rightPosX;
     [SerializeField] float posY;
 
     [SerializeField] float offsetMultiplier;
-    private Nodo parent;
     [SerializeField] Nodo p;
     [SerializeField] Nodo q;
     public bool rotationOcurred;
-
-    bool doubleRotation;
-
     int CheckDepth(Nodo nodo)
     {
         if (nodo == null) return -1;
@@ -24,10 +19,6 @@ public class RotationManager : MonoBehaviour
         return (1 + Math.Max(CheckDepth(nodo.izq), CheckDepth(nodo.der)));
     }
 
-    private void Update()
-    {
-        
-    }
     public void CheckRotations (Nodo nodo)
     {
         if (nodo == null) return;
@@ -208,20 +199,5 @@ public class RotationManager : MonoBehaviour
         parentNode.parent.izq.visualNode.transform.parent = parentNode.parent.visualNode.transform;
         parentNode.parent.izq.depth = parentNode.parent.depth + 1;
         newPos(parentNode.parent.izq, leftPosX, parentNode.parent.izq.depth);
-    }
-    IEnumerator DelayOrderLeft(Nodo q, Nodo p) 
-    {
-        doubleRotation = true;
-        yield return new WaitForSeconds(Seconds);
-        RotacionIzquierda(q, p);
-        doubleRotation = false;
-    }
-
-    IEnumerator DelayOrderRight(Nodo q, Nodo p)
-    {
-        doubleRotation = true;
-        yield return new WaitForSeconds(Seconds);
-        RotacionDerecha(q, p);
-        doubleRotation = false;
     }
 }

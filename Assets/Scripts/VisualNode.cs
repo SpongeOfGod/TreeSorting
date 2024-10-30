@@ -9,11 +9,12 @@ public class VisualNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public TextMeshProUGUI DataText;
     public SpriteRenderer Sprite;
     public Nodo Nodo;
+    public string ParentNode;
     [SerializeField] private Color originalColor;
 
     private void Awake()
     {
-        Nodo = new Nodo(this);
+        //Nodo = new Nodo(this);
         DataText = GetComponent<TextMeshProUGUI>();
         Sprite = GetComponent<SpriteRenderer>();
     }

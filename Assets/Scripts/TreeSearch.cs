@@ -2,10 +2,13 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using EnClase;
 
 public class TreeSearch : MonoBehaviour
 {
-    public TreeSpawning treeSpawning;
+    public TreeStructure testSpawnTree;
+    public SpawnABBTree SpawnABBTree;
+    public SpawnAVLTree SpawnAVLTree;
     public Button preOrderButton;
     public Button inOrderButton;
     public Button postOrderButton;
@@ -16,11 +19,13 @@ public class TreeSearch : MonoBehaviour
         preOrderButton.onClick.AddListener(SearchByPreOrder);
         inOrderButton.onClick.AddListener(SearchByInOrder);
         postOrderButton.onClick.AddListener(SearchByPostOrder);
+
+        testSpawnTree = SpawnABBTree == null ? SpawnAVLTree.AVLTree : SpawnABBTree.ABBTree;
     }
 
     private void Start()
     {
-        int depth = CheckDepth(treeSpawning.RootNodo);
+        int depth = CheckDepth(testSpawnTree.root);
         depthDisplay.text = depth.ToString();    
     }
 
@@ -33,7 +38,7 @@ public class TreeSearch : MonoBehaviour
     void SearchByPreOrder() 
     {
         dataDisplay.text = string.Empty;
-        CheckPreOrder(treeSpawning.RootNodo);
+        CheckPreOrder(testSpawnTree.root);
         string newText = dataDisplay.text.Remove(dataDisplay.text.Length - 1);
         dataDisplay.text = newText;
     }
@@ -41,7 +46,7 @@ public class TreeSearch : MonoBehaviour
     void SearchByInOrder() 
     {
         dataDisplay.text = string.Empty;
-        CheckInOrder(treeSpawning.RootNodo);
+        CheckInOrder(testSpawnTree.root);
         string newText = dataDisplay.text.Remove(dataDisplay.text.Length - 1);
         dataDisplay.text = newText;
     }
@@ -49,7 +54,7 @@ public class TreeSearch : MonoBehaviour
     void SearchByPostOrder() 
     {
         dataDisplay.text = string.Empty;
-        CheckPostOrder(treeSpawning.RootNodo);
+        CheckPostOrder(testSpawnTree.root);
         string newText = dataDisplay.text.Remove(dataDisplay.text.Length - 1);
         dataDisplay.text = newText;
     }
