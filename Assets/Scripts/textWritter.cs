@@ -59,7 +59,8 @@ public class TextWritter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) && textMeshProUGUI.text != string.Empty)
         {
             int.TryParse(textMeshProUGUI.text, out int intString);
-            Conjunto.Add(intString);
+            bool could = Conjunto.Add(intString);
+            Debug.Log($"{could} - {Conjunto.Cardinality()}");
             clearText();
         }
 
@@ -108,40 +109,39 @@ public class TextWritter : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab)) 
         {
-            if (Equals(Conjunto.GetType(), new DynamicTDA<int>()))
+            if (Conjunto.GetType() == typeof(DynamicTDA<int>))
             {
                 StaticTDA<int> tempStatic = new StaticTDA<int>(10);
-                Conjunto = tempStatic.Union(Conjunto);
+                tempStatic.Union(Conjunto);
+                Conjunto = tempStatic;
                 Debug.Log("Cambio a Static");
             }
             else 
             {
                 DynamicTDA<int> tempDynamic = new DynamicTDA<int>();
-                Conjunto = tempDynamic.Union(Conjunto);
+                tempDynamic.Union(Conjunto);
+                Conjunto = tempDynamic;
                 Debug.Log("Cambio a Dynamic");
             }
         }
 
         if (Input.GetKeyDown(KeyCode.U) && ConjuntoPrevio != null)
         {
-            StaticTDA<int> conjunto = (StaticTDA<int>)Conjunto.Union(ConjuntoPrevio);
-            Conjunto = conjunto;
+            Conjunto = Conjunto.Union(ConjuntoPrevio);
             ConjuntoPrevio = null;
             NuevoConjunto.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.I) && ConjuntoPrevio != null)
-        {
-            StaticTDA<int> conjunto = (StaticTDA<int>)Conjunto.Intersection(ConjuntoPrevio);
-            Conjunto = conjunto;
+        {   
+            Conjunto = Conjunto.Intersection(ConjuntoPrevio);
             ConjuntoPrevio = null;
             NuevoConjunto.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.D) && ConjuntoPrevio != null)
         {
-            StaticTDA<int> conjunto = (StaticTDA<int>)Conjunto.Difference(ConjuntoPrevio);
-            Conjunto = conjunto;
+            Conjunto = Conjunto.Difference(ConjuntoPrevio);
             ConjuntoPrevio = null;
             NuevoConjunto.Invoke();
         }
@@ -150,7 +150,9 @@ public class TextWritter : MonoBehaviour
         {
             Enter.Invoke();
             ConjuntoPrevio = Conjunto;
-            Conjunto = new StaticTDA<int>(10);
+
+            Conjunto = ConjuntoPrevio.GetType() == typeof(DynamicTDA<int>) ? new DynamicTDA<int>() : new StaticTDA<int>(10);
+
             ShowNumbers showObject = Instantiate(showNumbersPrefab, CurrentParentShow);
             showObject.textWritter = this;
         }

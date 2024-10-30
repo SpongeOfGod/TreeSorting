@@ -27,8 +27,9 @@ public class ShowNumbers : MonoBehaviour
         {
             string textToShow = string.Empty;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < textWritter.Conjunto.Cardinality(); i++)
             {
+                conjuntoEstatico = textWritter.Conjunto;
                 textToShow += conjuntoEstatico.GetElement(i) + "\n";
             }
 

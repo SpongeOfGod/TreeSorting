@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
-namespace EnClase
-{
+
     // Este lo tiene el Prefab
     class NodeVisual : MonoBehaviour        
     {
@@ -43,7 +42,7 @@ namespace EnClase
         }
 
         // public  -> 4 algoritmos de order
-    }
+     }
 
     [System.Serializable]
     public class TreeABB : TreeStructure 
@@ -341,4 +340,3 @@ namespace EnClase
             newPos(parentNode.parent.izq, leftPosX, parentNode.parent.izq.depth);
         }
     }
-}

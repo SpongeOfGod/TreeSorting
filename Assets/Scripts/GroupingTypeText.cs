@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Test.Muestra;
 using TMPro;
 using UnityEngine;
 
@@ -19,6 +16,6 @@ public class GroupingTypeText : MonoBehaviour
 
     void ChangeType()
     {
-        textMeshProUGUI.text = Equals(textWritter.Conjunto.GetType(),  new StaticTDA<int>(10)) ? staticGroup : dynamicGroup;
+        textMeshProUGUI.text = textWritter.Conjunto.GetType() == typeof(DynamicTDA<int>) ? dynamicGroup : staticGroup;
     }
 }
