@@ -97,8 +97,6 @@ namespace EnClase
         public override void Initialize()
         {
             AVLRotationManager = new AVLRotation(this);
-            AVLRotationManager.leftPosX = -75;
-            AVLRotationManager.rightPosX = 50;
         }
         public void Insert(int value)
         {
@@ -149,8 +147,8 @@ namespace EnClase
     {
         public TreeAVL AVLTree;
         [SerializeField] public float Seconds = 1f;
-        [SerializeField] public float leftPosX = -25;
-        [SerializeField] public float rightPosX = 25;
+        [SerializeField] public float leftPosX;
+        [SerializeField] public float rightPosX;
         [SerializeField] public float posY = -144;
 
         [SerializeField] public float offsetMultiplier = 3;

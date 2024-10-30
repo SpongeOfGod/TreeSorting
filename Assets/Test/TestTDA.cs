@@ -5,31 +5,31 @@ namespace Test
 {
     public class TestTDA : MonoBehaviour
     {
-        ConjuntoDinamico c1 = new ConjuntoDinamico();
-        ConjuntoEstatico c2 = new ConjuntoEstatico();
+        //ConjuntoDinamico c1 = new ConjuntoDinamico();
+        //ConjuntoEstatico c2 = new ConjuntoEstatico();
 
-        Muestra.StaticTDA<float> tda1 = new Muestra.StaticTDA<float>(10);
-        Muestra.DynamicTDA<float> tda2 = new Muestra.DynamicTDA<float>();
+        //Muestra.StaticTDA<float> tda1 = new Muestra.StaticTDA<float>(10);
+        //Muestra.DynamicTDA<float> tda2 = new Muestra.DynamicTDA<float>();
 
-        private void Start()
-        {
-            for (int i = 0; i < 10; i++)
-                c1.Add(i);
+        //private void Start()
+        //{
+        //    for (int i = 0; i < 10; i++)
+        //        c1.Add(i);
 
-            for (int i = 5; i < 10; i++)
-                c2.Add(i);
+        //    for (int i = 5; i < 10; i++)
+        //        c2.Add(i);
 
-            var c3 = new ConjuntoEstatico();
-        }
+        //    var c3 = new ConjuntoEstatico();
+        //}
     }
 
     namespace Muestra
     {
-        public abstract class TDA<T>
+        public abstract class T_TDA<T>
         {
             // Todas las funciones Abstractas        
-            public abstract TDA<T> Union(TDA<T> other);
-            public abstract TDA<T> Intersect(TDA<T> other);
+            public abstract T_TDA<T> Union(T_TDA<T> other);
+            public abstract T_TDA<T> Intersect(T_TDA<T> other);
             public abstract bool Contains(T element);
             public abstract bool Add(T element);
             public abstract T GetElement(int index);
@@ -45,6 +45,7 @@ namespace Test
             public StaticTDA(int size)
             {
                 maxSize = size;
+                datas = new T[maxSize];
             }
 
             public override int Cardinality() => currentSize;
@@ -59,6 +60,23 @@ namespace Test
                 return true;
             }
 
+            public override void Remove(T element) 
+            {
+            
+            }
+
+            public override bool IsEmpty()
+            {
+                if (Cardinality() < 1) return true;
+
+                return false;
+            }
+
+            public override T Show() 
+            {
+                int index = Random.Range(0, Cardinality());
+                return datas[index];
+            }
             public override bool Contains(T element)
             {
                 for (int i = 0; i < currentSize; i++)
@@ -68,7 +86,7 @@ namespace Test
                 return false;
             }
 
-            public override TDA<T> Intersect(TDA<T> other)
+            public override TDA<T> Intersection(TDA<T> other)
             {
                 StaticTDA<T> conjuntoNuevo = new StaticTDA<T>(maxSize);
 
@@ -92,6 +110,21 @@ namespace Test
                 return conjuntoNuevo;
             }
 
+            public override TDA<T> Difference(TDA<T> other)
+            {
+                StaticTDA<T> conjuntoNuevo = new StaticTDA<T>(maxSize);
+
+                for (int i = 0; i < currentSize; i++)
+                    if (!other.Contains(datas[i]))
+                        conjuntoNuevo.Add(datas[i]);
+
+                for (int i = 0; i < other.Cardinality(); i++)
+                    if (!Contains(other.GetElement(i)))
+                        conjuntoNuevo.Add(other.GetElement(i));
+
+                return conjuntoNuevo;
+            }
+
             public override T GetElement(int index)
             {
                 if (index < Cardinality())
@@ -105,20 +138,34 @@ namespace Test
         {
             List<T> datas;
 
+            public override int Cardinality() => datas.Count;
+
             public override bool Add(T element)
             {
                 if (Contains(element))
                     return false;
-             
+
                 datas.Add(element);
                 return true;
             }
 
-            public override int Cardinality()
+            public override void Remove(T element)
             {
-                throw new System.NotImplementedException();
+
             }
 
+            public override bool IsEmpty()
+            {
+                if (Cardinality() < 1) return true;
+
+                return false;
+            }
+
+            public override T Show()
+            {
+                int index = Random.Range(0, Cardinality());
+                return datas[index];
+            }
             public override bool Contains(T element)
             {
                 for (int i = 0; i < datas.Count; i++)
@@ -128,17 +175,7 @@ namespace Test
                 return false;
             }
 
-            public override T GetElement(int index)
-            {
-                throw new System.NotImplementedException();
-            }
-
-            public override TDA<T> Intersect(TDA<T> other)
-            {
-                throw new System.NotImplementedException();
-            }
-
-            public override TDA<T> Union(TDA<T> other)
+            public override TDA<T> Intersection(TDA<T> other)
             {
                 DynamicTDA<T> conjuntoNuevo = new DynamicTDA<T>();
 
@@ -147,6 +184,42 @@ namespace Test
                         conjuntoNuevo.Add(datas[i]);
 
                 return conjuntoNuevo;
+            }
+
+            public override TDA<T> Union(TDA<T> other)
+            {
+                DynamicTDA<T> conjuntoNuevo = new DynamicTDA<T>();
+
+                for (int i = 0; i < datas.Count; i++)
+                    conjuntoNuevo.Add(datas[i]);
+
+                for (int i = 0; i < other.Cardinality(); i++)
+                    conjuntoNuevo.Add(other.GetElement(i));
+
+                return conjuntoNuevo;
+            }
+
+            public override TDA<T> Difference(TDA<T> other)
+            {
+                DynamicTDA<T> conjuntoNuevo = new DynamicTDA<T>();
+
+                for (int i = 0; i < datas.Count; i++)
+                    if (!other.Contains(datas[i]))
+                        conjuntoNuevo.Add(datas[i]);
+
+                for (int i = 0; i < other.Cardinality(); i++)
+                    if (!Contains(other.GetElement(i)))
+                        conjuntoNuevo.Add(other.GetElement(i));
+
+                return conjuntoNuevo;
+            }
+
+            public override T GetElement(int index)
+            {
+                if (index < Cardinality())
+                    return datas[index];
+
+                return default;
             }
         }
     }

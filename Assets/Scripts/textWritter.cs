@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Test.Muestra;
+using System.IO;
 
 public class TextWritter : MonoBehaviour
 {
-    public ConjuntoDinamico Conjunto;
-    public ConjuntoDinamico ConjuntoPrevio;
+    public TDA<int> Conjunto;
+    public TDA<int> ConjuntoPrevio;
     TextMeshProUGUI textMeshProUGUI;
     Stack<string> strings = new Stack<string>();
     public ShowNumbers showNumbersPrefab;
@@ -20,7 +22,7 @@ public class TextWritter : MonoBehaviour
     private void Awake()
     {
         textMeshProUGUI = GetComponent<TextMeshProUGUI>();
-        Conjunto = new ConjuntoDinamico();
+        Conjunto = new StaticTDA<int>(10);
     }
 
     private void Update()
@@ -94,7 +96,7 @@ public class TextWritter : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Conjunto.isEmpty())
+            if (Conjunto.IsEmpty())
             {
                 Debug.Log("El conjunto esta vacío");
             }
@@ -104,9 +106,25 @@ public class TextWritter : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Tab)) 
+        {
+            if (Equals(Conjunto.GetType(), new DynamicTDA<int>()))
+            {
+                StaticTDA<int> tempStatic = new StaticTDA<int>(10);
+                Conjunto = tempStatic.Union(Conjunto);
+                Debug.Log("Cambio a Static");
+            }
+            else 
+            {
+                DynamicTDA<int> tempDynamic = new DynamicTDA<int>();
+                Conjunto = tempDynamic.Union(Conjunto);
+                Debug.Log("Cambio a Dynamic");
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.U) && ConjuntoPrevio != null)
         {
-            ConjuntoDinamico conjunto = (ConjuntoDinamico)Conjunto.Union(ConjuntoPrevio);
+            StaticTDA<int> conjunto = (StaticTDA<int>)Conjunto.Union(ConjuntoPrevio);
             Conjunto = conjunto;
             ConjuntoPrevio = null;
             NuevoConjunto.Invoke();
@@ -114,7 +132,7 @@ public class TextWritter : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I) && ConjuntoPrevio != null)
         {
-            ConjuntoDinamico conjunto = (ConjuntoDinamico)Conjunto.Intersection(ConjuntoPrevio);
+            StaticTDA<int> conjunto = (StaticTDA<int>)Conjunto.Intersection(ConjuntoPrevio);
             Conjunto = conjunto;
             ConjuntoPrevio = null;
             NuevoConjunto.Invoke();
@@ -122,7 +140,7 @@ public class TextWritter : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D) && ConjuntoPrevio != null)
         {
-            ConjuntoDinamico conjunto = (ConjuntoDinamico)Conjunto.Difference(ConjuntoPrevio);
+            StaticTDA<int> conjunto = (StaticTDA<int>)Conjunto.Difference(ConjuntoPrevio);
             Conjunto = conjunto;
             ConjuntoPrevio = null;
             NuevoConjunto.Invoke();
@@ -132,22 +150,13 @@ public class TextWritter : MonoBehaviour
         {
             Enter.Invoke();
             ConjuntoPrevio = Conjunto;
-            Conjunto = new ConjuntoDinamico();
-            Conjunto.isDinamic = ConjuntoPrevio.isDinamic;
+            Conjunto = new StaticTDA<int>(10);
             ShowNumbers showObject = Instantiate(showNumbersPrefab, CurrentParentShow);
             showObject.textWritter = this;
         }
 
         if (Input.GetKeyDown(KeyCode.Tab)) 
         {
-            if (Conjunto.isDinamic) 
-            {
-                Conjunto.SetToArray();
-            }
-            else 
-            {
-                Conjunto.SetToList();
-            }
             changeGroupingType.Invoke();
         }
     }

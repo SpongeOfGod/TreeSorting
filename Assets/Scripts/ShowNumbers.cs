@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Test.Muestra;
 
 public class ShowNumbers : MonoBehaviour
 {
-    [SerializeField] ConjuntoDinamico conjuntoEstatico;
+    [SerializeField] TDA<int> conjuntoEstatico;
     public TextWritter textWritter;
     TextMeshProUGUI textUI;
     public bool deattach;
@@ -26,9 +27,9 @@ public class ShowNumbers : MonoBehaviour
         {
             string textToShow = string.Empty;
 
-            foreach(int number in conjuntoEstatico.ints) 
+            for (int i = 0; i < 10; i++)
             {
-                textToShow += $"{number}\n";
+                textToShow += conjuntoEstatico.GetElement(i) + "\n";
             }
 
             textUI.text = textToShow;
