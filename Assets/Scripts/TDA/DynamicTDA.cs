@@ -18,8 +18,14 @@ public class DynamicTDA<T> : TDA<T>
 
     public override void Remove(T element)
     {
-
+        if (Contains(element))
+            for (int i = 0; i < datas.Count; i++)
+                if (Equals(datas[i], element)) 
+                {
+                    datas.RemoveAt(i);
+                }
     }
+
 
     public override bool IsEmpty()
     {

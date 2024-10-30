@@ -26,7 +26,14 @@ public class StaticTDA<T> : TDA<T>
 
     public override void Remove(T element) 
     {
-            
+        if (Contains(element))
+            for (int i = 0; i < currentSize; i++)
+                if (Equals(datas[i], element)) 
+                {
+                    (datas[i], datas[currentSize - 1]) = (datas[currentSize - 1], datas[i]);
+                    datas[currentSize] = default(T);
+                    currentSize--;
+                }
     }
 
     public override bool IsEmpty()
