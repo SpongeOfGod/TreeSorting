@@ -1,147 +1,6 @@
-using System;
-using UnityEngine;
+锘縰sing UnityEngine;
 
-    // Este lo tiene el Prefab
-    class NodeVisual : MonoBehaviour        
-    {
-        public GameObject GameObject { get; private set; }
-        public SpriteRenderer SpriteRenderer { get; private set; }
-    }
-
-    class Node
-    {
-        public NodeVisual NodeVisual { get; private set; }
-        int data = 0;
-
-        public Node()
-        {
-            //NodeVisual = GameManager.Instance.GetNodeInstance();
-        }
-    }
-
-    [System.Serializable]
-     public class TreeStructure
-     {
-        public Nodo root { get; set; }
-        public int posY = -144;
-        public int offsetMultiplier = 3;
-        public int depth = 0;
-        public int posX = 114;
-
-        public virtual void Initialize() { }
-        public virtual Nodo InsertNode(Nodo node, int value)
-        {
-            return null;
-        }
-
-        public int CheckDepth(Nodo nodo)
-        {
-            if (nodo == null) return -1;
-
-            return (1 + Math.Max(CheckDepth(nodo.izq), CheckDepth(nodo.der)));
-        }
-
-        // public  -> 4 algoritmos de order
-     }
-
-    [System.Serializable]
-    public class TreeABB : TreeStructure 
-    {
-        public void Insert(int value) 
-        {
-            root = InsertNode(root, value);
-        }
-
-        public override Nodo InsertNode(Nodo node, int value)
-        {
-            if (node == null) 
-            {
-                return new Nodo(value);
-            }
-            if (value < node.dato) 
-            {
-                depth++;
-                node.izq = InsertNode(node.izq, value);
-                node.izq.visualNode.ParentNode = node.dato.ToString();
-                node.izq.visualNode.transform.SetParent(node.visualNode.transform, true);
-                node.izq.positionX = -posX;
-                node.izq.depth = CheckDepth(node) + 1;
-                node.izq.SetVisualPosition(posY, offsetMultiplier);
-            } 
-            else if (value > node.dato) 
-            {
-                depth++;
-                node.der = InsertNode(node.der, value);
-                node.der.visualNode.ParentNode = node.dato.ToString();
-                node.der.visualNode.transform.SetParent(node.visualNode.transform, true);
-                node.der.positionX = posX;
-                node.der.depth = CheckDepth(node) + 1;
-                node.der.SetVisualPosition(posY, offsetMultiplier);
-            }
-            else
-            {
-                return node;
-            }
-
-            depth = 0;
-            return node;
-        }
-    }
-
-    [System.Serializable]
-    public class TreeAVL : TreeStructure
-    {
-        [SerializeField]  private AVLRotation AVLRotationManager;
-
-        public override void Initialize()
-        {
-            AVLRotationManager = new AVLRotation(this);
-        }
-        public void Insert(int value)
-        {
-            root = InsertNode(root, value);
-        }
-        public override Nodo InsertNode(Nodo node, int value)
-        {
-            if (node == null)
-            {
-                return new Nodo(value);
-            }
-            if (value < node.dato)
-            {
-                depth++;
-                node.izq = InsertNode(node.izq, value);
-                node.izq.parent = node;
-                node.izq.visualNode.ParentNode = node.dato.ToString();
-                node.izq.visualNode.transform.SetParent(node.visualNode.transform, true);
-                node.izq.positionX = -posX;
-                node.izq.depth = CheckDepth(node) + 1;
-                node.izq.SetVisualPosition(posY, offsetMultiplier);
-                AVLRotationManager.CheckRotations(node.izq);
-            }
-            else if (value > node.dato)
-            {
-                depth++;
-                node.der = InsertNode(node.der, value);
-                node.der.parent = node;
-                node.der.visualNode.ParentNode = node.dato.ToString();
-                node.der.visualNode.transform.SetParent(node.visualNode.transform, true);
-                node.der.positionX = posX;
-                node.der.depth = CheckDepth(node) + 1;
-                node.der.SetVisualPosition(posY, offsetMultiplier);
-                AVLRotationManager.CheckRotations(node.der);
-            }
-            else
-            {
-                return node;
-            }
-            depth = 0;
-            return node;
-        }
-        
-    }
-
-    [System.Serializable]
+[System.Serializable]
     public class AVLRotation
     {
         public TreeAVL AVLTree;
@@ -183,13 +42,13 @@ using UnityEngine;
 
             if (balance > 1 && balanceSubRight >= 0)
             {
-                Debug.Log("Rotaci髇 Simple Izquierda");
+                Debug.Log("Rotaci贸n Simple Izquierda");
                 rotationOcurred = true;
                 RotacionIzquierda(q, p);
             }
             else if (balance > 1 && balanceSubRight < 0)
             {
-                Debug.Log("Doble Rotaci髇 Izquierda");
+                Debug.Log("Doble Rotaci贸n Izquierda");
                 rotationOcurred = true;
                 RotacionDerecha(q.izq, q);
                 RotacionIzquierda(q, p);
@@ -215,13 +74,13 @@ using UnityEngine;
 
             if (balance < -1 && balanceSubLeft <= 0)
             {
-                Debug.Log("Rotaci髇 Simple Derecha");
+                Debug.Log("Rotaci贸n Simple Derecha");
                 rotationOcurred = true;
                 RotacionDerecha(q, p);
             }
             else if (balance < -1 && balanceSubLeft > 0)
             {
-                Debug.Log("Doble Rotaci髇 Derecha");
+                Debug.Log("Doble Rotaci贸n Derecha");
                 rotationOcurred = true;
                 RotacionIzquierda(q.der, q);
                 RotacionDerecha(q, p);

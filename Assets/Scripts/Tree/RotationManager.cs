@@ -53,7 +53,6 @@ public class RotationManager
             rotationOcurred = true;
             RotacionDerecha(q.izq, q);
             RotacionIzquierda(q, p);
-            //StartCoroutine(DelayOrderLeft(p.der, p));
         }
     }
 
@@ -86,7 +85,6 @@ public class RotationManager
             rotationOcurred = true;
             RotacionIzquierda(q.der, q);
             RotacionDerecha(q, p);
-            //StartCoroutine(DelayOrderRight(p.izq, p));
         }
     }
 
