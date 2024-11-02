@@ -1,6 +1,6 @@
 public abstract class GraphTDA<T> /* Conjunto TDA para el Grafo. */
 {
-    public abstract void InitializeGraph();
+    public abstract void InitializeGraph(GraphManager spawnGraph);
     public abstract bool AddVertice(T element);
     public abstract bool RemoveVertice(T element);
     public abstract bool VerticeExists(T element);

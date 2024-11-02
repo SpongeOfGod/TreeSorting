@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    public GraphManager spawnGraph;
     public TextMeshProUGUI DataText;
     public SpriteRenderer Sprite;
     public Vertice Vertice;
@@ -18,15 +18,17 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         DataText = GetComponent<TextMeshProUGUI>();
         Sprite = GetComponent<SpriteRenderer>();
+
+        GameObject gameObject = GameObject.FindGameObjectWithTag("Graph");
+        spawnGraph = gameObject.GetComponent<GraphManager>();
+        int VerticeData = Random.Range(1, 100);
+        Vertice = new Vertice(VerticeData, this, spawnGraph);
+        
+        DataText.text = Vertice.Value.ToString();
     }
 
     private void Start()
     {
-        int VerticeData = Random.Range(1, 100);
-        Vertice = new Vertice(VerticeData, this);
-        
-        DataText.text = Vertice.Value.ToString();
-
         Color generatedColor;
         do
         {
@@ -41,13 +43,13 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         Sprite.color = originalColor;
     }
 
-    private bool IsTooLight(Color color)
+    private bool IsTooLight(Color color) // Comprueba si los valores (r)ed, (g)reen, (b)lue pasan cierto limite.
     {
         float brightness = 0.299f * color.r + 0.587f * color.g + 0.114f * color.b;
         return brightness > 0.7f;
     }
 
-    private bool IsPrimaryColor(Color color)
+    private bool IsPrimaryColor(Color color) // Comprueba si los valores (r)ed, (g)reen, (b)lue están cerca del color rojo o verde.
     {
         return (color.r > 0.8f && color.g < 0.2f && color.b < 0.2f) ||
                (color.g > 0.8f && color.r < 0.2f && color.b < 0.2f);
@@ -72,5 +74,9 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerClick(PointerEventData data)
     {
         Sprite.color = Color.green;
+        if (!Vertice.spawnGraph.PathToFollow.Contains(this)) 
+        {
+            Vertice.spawnGraph.PathToFollow.Add(this);
+        }
     }
 }

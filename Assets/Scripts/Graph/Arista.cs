@@ -23,6 +23,9 @@ public class Arista
         }
 
         OriginVert.AristasSalientes.Add(this);
+
+        (Origin, End) = (End, Origin);
+
         DestinationVert.AristasEntrantes.Add(this);
     }
 }

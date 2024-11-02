@@ -4,14 +4,16 @@ using UnityEngine;
 public class DynamicGraph<T> : GraphTDA<T> // Grafo dinámico que hereda del conjunto grafo.
 {
     public DynamicTDA<T> verticesData;
+    GraphManager spawnGraph;
     [SerializeField] Dictionary<T, List<(T, Arista)>> adyacentList = new Dictionary<T, List<(T, Arista)>>();
 
     // ↑
     // Diccionario de vertices, cada uno contiene listas de (vertices, y aristas), simulando filas y columnas.
 
-    public override void InitializeGraph()
+    public override void InitializeGraph(GraphManager spawnGraph)
     {
         verticesData = new DynamicTDA<T>(); //Conjunto dinamico de vertices que guarda los vertices creados.
+        this.spawnGraph = spawnGraph;
     }
     public override bool AddVertice(T element) // Ve si el vertice recibido ya se encuentra guardado.
     {
