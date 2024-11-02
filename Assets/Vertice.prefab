@@ -109,12 +109,12 @@ GameObject:
   - component: {fileID: 8701739798745095945}
   - component: {fileID: 3082856376488062872}
   - component: {fileID: 739145983501149476}
-  - component: {fileID: 4970839455552211616}
   - component: {fileID: 655605522112568217}
   - component: {fileID: 7878038856465919128}
   - component: {fileID: -5829896200509002873}
+  - component: {fileID: 5703997800250517156}
   m_Layer: 5
-  m_Name: Nodo
+  m_Name: Vertice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,27 +224,6 @@ MonoBehaviour:
   m_Spacing: {x: 126.3, y: 75.9}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &4970839455552211616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4021294513049730059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fe1095c0cbd83e419498621894d0085, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DataText: {fileID: 0}
-  Sprite: {fileID: 0}
-  Nodo:
-    visualNode: {fileID: 0}
-    dato: 0
-    depth: 0
-    positionX: 0
-  ParentNode: 
-  originalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &655605522112568217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,7 +320,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4021294513049730059}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a3c18ea2d30d154391866a5e53c23fd, type: 3}
   m_Name: 
@@ -382,3 +361,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 51.2
+--- !u!114 &5703997800250517156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4021294513049730059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18428c5c2a00fc641b5d1c757d3f184f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DataText: {fileID: 655605522112568217}
+  Sprite: {fileID: 3082856376488062872}
+  RectTransform: {fileID: 0}
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
+  LimitX: 1300
+  LimitY: 702
+  initialLimit: 0

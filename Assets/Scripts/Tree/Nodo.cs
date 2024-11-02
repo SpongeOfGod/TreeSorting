@@ -15,7 +15,7 @@ public class Nodo
 
     public Nodo(int dato) 
     {
-        visualNode = GameManager.Instance.GetNodeInstance();
+        visualNode = ParentManager.Instance.GetNodeInstance();
         visualNode.DataText.text = dato.ToString();
         visualNode.Nodo = this;
         this.dato = dato;
@@ -23,7 +23,7 @@ public class Nodo
 
     public void SetVisualPosition(int posY, int offsetMultiplier) 
     {
-        visualNode.GetComponent<RectTransform>().anchoredPosition = new Vector2(positionX * (/*offsetMultiplier / */(depth + 1)), posY);
+        visualNode.GetComponent<RectTransform>().anchoredPosition = new Vector2(positionX * (depth + 1), posY);
     }
 
     public void AssignData(int dato, Nodo izq, Nodo der, Nodo parent, int depth)

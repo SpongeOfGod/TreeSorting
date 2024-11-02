@@ -4,14 +4,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class VisualNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public TextMeshProUGUI DataText;
     public SpriteRenderer Sprite;
-    public Nodo Nodo;
-    public string ParentNode;
+    public Vertice Vertice;
+    public RectTransform RectTransform;
+    [SerializeField] List<(GameObject, int)> values = new List<(GameObject, int)>();
     [SerializeField] private Color originalColor;
 
+    public int initialLimit = 0;
     private void Awake()
     {
         DataText = GetComponent<TextMeshProUGUI>();
@@ -20,6 +22,11 @@ public class VisualNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void Start()
     {
+        int VerticeData = Random.Range(1, 100);
+        Vertice = new Vertice(VerticeData, this);
+        
+        DataText.text = Vertice.Value.ToString();
+
         Color generatedColor;
         do
         {

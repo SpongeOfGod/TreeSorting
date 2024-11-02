@@ -5,8 +5,8 @@
     {
         public TreeAVL AVLTree;
         [SerializeField] public float Seconds = 1f;
-        [SerializeField] public float leftPosX;
-        [SerializeField] public float rightPosX;
+        [SerializeField] public float leftPosX = -60;
+        [SerializeField] public float rightPosX = 50;
         [SerializeField] public float posY = -144;
 
         [SerializeField] public float offsetMultiplier = 3;
