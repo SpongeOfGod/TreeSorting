@@ -14,17 +14,18 @@ public class PathSearch : MonoBehaviour
     {
         if (graphManager.PlayerVertice != null && !once)
         {
-            once = true;
+            once = true; // Inicia el chequeo de aristas salientes, aristas que tienen como origen al nodo especifico.
             verticesPath = CheckVerticeSaliente(graphManager.PlayerVertice.Vertice, new List<VisualVertice>());
-        }
-
+        }                // Se utiliza Deep First Search, avanzando lo más posible hasta llegar a un bloqueo.
+                         // Al chocar con el bloqueo (un nodo vacio o un nodo que ya se ha visitado), se retrocede hasta un nodo
+                         // Que tenga caminos por explorar.
 
         elapsedTime += Time.deltaTime;
         if (elapsedTime > delayTime && verticesPath != null)
         {
             elapsedTime = 0;
-            
-            if (currentIndex < verticesPath.Count) 
+
+            if (currentIndex < verticesPath.Count)
             {
                 graphManager.PlayerVertice = verticesPath[currentIndex];
                 currentIndex++;
@@ -33,41 +34,39 @@ public class PathSearch : MonoBehaviour
     }
     public List<VisualVertice> CheckVerticeSaliente(Vertice vertice, List<VisualVertice> verticesPath)
     {
-        if (vertice == graphManager.ExitVertice.Vertice) 
+        if (verticesPath.Contains(graphManager.ExitVertice.Vertice.VerticeVisual))
         {
-            this.enabled = false;
-            graphManager.enabled = false;
+            return verticesPath;
         }
 
-        if (vertice.visited)
+        if (vertice.visited) // Si se ha visitado el nodo, se lo remueve del camino
         {
-            verticesPath.Remove(vertice.VerticeVisual);
+            verticesPath.RemoveAt(verticesPath.Count - 1);
             return verticesPath;
         }
 
         vertice.visited = true;
         verticesPath.Add(vertice.VerticeVisual);
+
         VisualVertice currentVert = vertice.VerticeVisual;
-        if (vertice.AristasSalientes.Count > 0)
+
+        if (vertice.AristasSalientes.Count > 0) // Si tiene más de una arista que lleve a otro nodo
         {
-            for (int i = 0; i < vertice.AristasSalientes.Count; i++)
+            for (int i = 0; i < vertice.AristasSalientes.Count; i++) // Se comprueba que no sea un nodo ya visitado
             {
-                if (!vertice.AristasSalientes[i].DestinationVert.visited) 
+                if (!vertice.AristasSalientes[i].DestinationVert.visited && !verticesPath.Contains(graphManager.ExitVertice.Vertice.VerticeVisual))
                 {
                     currentVert = vertice.AristasSalientes[i].DestinationVert.VerticeVisual;
-                    verticesPath.Add(currentVert);
-                    break;
+                    verticesPath = CheckVerticeSaliente(currentVert.Vertice, verticesPath); // Recursividad - Crea una lista partir del vertice elegido.
                 }
             }
         }
 
         if (vertice == graphManager.ExitVertice.Vertice)
         {
-            graphManager.PlayerVertice = graphManager.ExitVertice;
-            this.enabled = false;
-            graphManager.enabled = false;
+            return verticesPath;
         }
 
-        return CheckVerticeSaliente(currentVert.Vertice, verticesPath);
+        return CheckVerticeSaliente(currentVert.Vertice, verticesPath); // Cuando se llega a un camino sin saluda, se regresa.
     }
 }

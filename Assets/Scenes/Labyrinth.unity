@@ -3320,7 +3320,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 792435277}
-  - component: {fileID: 792435278}
   - component: {fileID: 792435279}
   m_Layer: 0
   m_Name: LabyrinthPaths
@@ -3344,32 +3343,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &792435278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792435276}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be7fe1c3c33d19243a707e230bac08cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  verticesConnections:
-  - StartVertice: {fileID: 1422542582}
-    EndVertice: {fileID: 627991047}
-  - StartVertice: {fileID: 627991047}
-    EndVertice: {fileID: 725337285}
-  - StartVertice: {fileID: 725337285}
-    EndVertice: {fileID: 756104877}
-  - StartVertice: {fileID: 756104877}
-    EndVertice: {fileID: 1129947211}
-  - StartVertice: {fileID: 627991047}
-    EndVertice: {fileID: 558397210}
-  - StartVertice: {fileID: 558397210}
-    EndVertice: {fileID: 1959396076}
-  graphManager: {fileID: 1216273493}
 --- !u!114 &792435279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7537,6 +7510,7 @@ MonoBehaviour:
   graphManager: {fileID: 1216273493}
   elapsedTime: 0
   delayTime: 0.5
+  verticesPath: []
 --- !u!4 &1812263606
 Transform:
   m_ObjectHideFlags: 0

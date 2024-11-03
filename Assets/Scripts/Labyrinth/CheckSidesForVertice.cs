@@ -15,10 +15,10 @@ public class CheckSidesForVertice : MonoBehaviour
             once = true;
             foreach (VisualVertice visualVertice in graphManager.VisualVertices) 
             {
-                Debug.DrawRay(visualVertice.transform.transform.position, transform.up * rayLength, Color.red, 99f);
-                Debug.DrawRay(visualVertice.transform.transform.position, transform.up * -1 * rayLength, Color.red, 99f);
-                Debug.DrawRay(visualVertice.transform.transform.position, transform.right * rayLength, Color.red, 99f);
-                Debug.DrawRay(visualVertice.transform.transform.position, transform.right * -1 * rayLength, Color.red, 99f);
+                ////Debug.DrawRay(visualVertice.transform.transform.position, transform.up * rayLength, Color.red, 99f);
+                ////Debug.DrawRay(visualVertice.transform.transform.position, transform.up * -1 * rayLength, Color.red, 99f);
+                ////Debug.DrawRay(visualVertice.transform.transform.position, transform.right * rayLength, Color.red, 99f);
+                ////Debug.DrawRay(visualVertice.transform.transform.position, transform.right * -1 * rayLength, Color.red, 99f);
 
                 VisualVertice upVertice = SpawnRays(visualVertice.transform.position, transform.up, rayLength);
                 VisualVertice downVertice = SpawnRays(visualVertice.transform.position, transform.up * -1, rayLength);
@@ -61,6 +61,7 @@ public class CheckSidesForVertice : MonoBehaviour
 
         if (!hitWall) 
         {
+            Debug.DrawRay(origin, direction * maxDistance, Color.red, 99f);
             return verticeToConnect;
         }
         else 
