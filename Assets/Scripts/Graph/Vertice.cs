@@ -8,6 +8,7 @@ public class Vertice
     public List<Arista> AristasSalientes; // Aristas saliente: Utilizan al vertice como origen.
     public int Value; 
     public VisualVertice VerticeVisual;
+    public bool visited;
     public Vertice(int value, VisualVertice visualVertice, GraphManager spawn) 
     {
         this.Value = value;

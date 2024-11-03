@@ -6,7 +6,7 @@ public abstract class GraphTDA<T> /* Conjunto TDA para el Grafo. */
     public abstract bool VerticeExists(T element);
     public abstract TDA<T> Vertices();
 
-    public abstract bool AddConnection(T verticeA, T verticeB);
+    public abstract bool AddConnection(T verticeA, T verticeB, int weight);
     public abstract bool RemoveConnection(T verticeA, T verticeB);
     public abstract bool ConnectionExists(T verticeA, T verticeB);
 

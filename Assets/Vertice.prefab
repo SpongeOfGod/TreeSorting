@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 5703997800250517156}
   m_Layer: 5
   m_Name: Vertice
-  m_TagString: Untagged
+  m_TagString: Vertice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -373,10 +373,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18428c5c2a00fc641b5d1c757d3f184f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnGraph: {fileID: 0}
   DataText: {fileID: 655605522112568217}
   Sprite: {fileID: 3082856376488062872}
+  Vertice:
+    spawnGraph: {fileID: 0}
+    AristasEntrantes: []
+    AristasSalientes: []
+    Value: 0
+    VerticeVisual: {fileID: 0}
   RectTransform: {fileID: 0}
   originalColor: {r: 0, g: 0, b: 0, a: 0}
-  LimitX: 1300
-  LimitY: 702
   initialLimit: 0

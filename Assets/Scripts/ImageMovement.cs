@@ -17,7 +17,7 @@ public class ImageMovement : MonoBehaviour
 
     void Update()
     {
-        if (graphManager != null) 
+        if (graphManager != null && graphManager.PlayerVertice != null) 
         {
             rectTransform.anchoredPosition = Vector3.Slerp(rectTransform.anchoredPosition, graphManager.PlayerVertice.transform.localPosition + UpOffset, timeToReach * Time.deltaTime);
         }

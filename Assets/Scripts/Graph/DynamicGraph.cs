@@ -48,7 +48,7 @@ public class DynamicGraph<T> : GraphTDA<T> // Grafo dinámico que hereda del con
     {
         return verticesData;
     }
-    public override bool AddConnection(T verticeOrigen, T VerticeDestino) // Genera una conexión de ida entre un vertice origen y un vertice destino.
+    public override bool AddConnection(T verticeOrigen, T VerticeDestino, int weight) // Genera una conexión de ida entre un vertice origen y un vertice destino.
     {
         // Ve si el diccionario contiene los elementos necesarios para agregar las conexiones.
          if (adyacentList.TryGetValue(verticeOrigen, out List<(T, Arista)> listA) && adyacentList.TryGetValue(VerticeDestino, out List<(T, Arista)> listB))
@@ -63,7 +63,15 @@ public class DynamicGraph<T> : GraphTDA<T> // Grafo dinámico que hereda del con
             }
             if (DoesNotContain) 
             {
-                Arista connectionBetween = new Arista(Random.Range(1, 100)); // Arista: Contiene un punto de origen y un punto final.
+                Arista connectionBetween = null;
+                if (weight == 0) 
+                {
+                    connectionBetween = new Arista(Random.Range(1, 100)); // Arista: Contiene un punto de origen y un punto final.
+                }
+                else 
+                {
+                    connectionBetween = new Arista(weight); // Arista: Contiene un punto de origen y un punto final.
+                }
                 connectionBetween.SetPoints(verticeOrigen, VerticeDestino); //Asigna el punto inicial y final de la arista respectivamente.
 
                 listA.Add((VerticeDestino, connectionBetween)); // Añade la conexión al VerticeA.

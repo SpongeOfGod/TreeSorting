@@ -15,8 +15,8 @@ public class LabyrinthConnections : MonoBehaviour
             once = true;
             foreach (TypeTwoVertices verticesConnections in verticesConnections) 
             {
-                graphManager.AddConnectionBetweenPoints(verticesConnections.StartVertice.Vertice, verticesConnections.EndVertice.Vertice);
-                graphManager.AddConnectionBetweenPoints(verticesConnections.EndVertice.Vertice, verticesConnections.StartVertice.Vertice);
+                //graphManager.AddConnectionBetweenPoints(verticesConnections.StartVertice.Vertice, verticesConnections.EndVertice.Vertice);
+                //graphManager.AddConnectionBetweenPoints(verticesConnections.EndVertice.Vertice, verticesConnections.StartVertice.Vertice);
             }
         }
     }

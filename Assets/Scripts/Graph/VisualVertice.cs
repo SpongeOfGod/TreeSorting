@@ -76,6 +76,12 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerClick(PointerEventData data)
     {
         Sprite.color = Color.green;
+
+        if (Vertice.spawnGraph.PlayerVertice == null) 
+        {
+            Vertice.spawnGraph.PlayerVertice = this;
+        }
+
         if (!Vertice.spawnGraph.PathToFollow.Contains(this)) 
         {
             Vertice.spawnGraph.PathToFollow.Add(this);
