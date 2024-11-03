@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50cb93652818184db8b52a76ccf347b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToGo: GalaxyConnections
+  sceneToGo: Graph Path
 --- !u!114 &184944353
 MonoBehaviour:
   m_ObjectHideFlags: 0

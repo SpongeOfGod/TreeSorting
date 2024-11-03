@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class GraphManager : MonoBehaviour // Manager de Grafo.
 {
-    [SerializeField] VisualVertice[] visualVertices; // Contiene todos los vertices iniciales.
+    [SerializeField] List<VisualVertice> visualVertices = new List<VisualVertice>(); // Contiene todos los vertices iniciales.
     public List<VisualVertice> PathToFollow = new List<VisualVertice>(); // Vertices que forman el camino que se debe tomar.
     public VisualVertice PlayerVertice; // Vertice actual en el que se encuentra el jugador.
     public VisualVertice HoverVertice;
-    DynamicGraph<Vertice> Graph; // Grafo dinámico, guarda los vertices.
+    public DynamicGraph<Vertice> Graph; // Grafo dinámico, guarda los vertices.
     private int Weight;
     public bool CanArrive;
     private float elapsedTime = 0;
     [SerializeField] float delayTime = 5;
+    [SerializeField] public bool Labyrinth = false; 
     void Start()
     {
         Graph = new DynamicGraph<Vertice>();
@@ -82,33 +83,47 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     }
     void Update()
     {
-        if (PathToFollow.Count > 0 && HoverVertice != null) 
+        if (!Labyrinth)
         {
-            CanArrive = CheckCanArrive(HoverVertice.Vertice, PathToFollow.Count - 1);
+            GraphTravel();
         }
-
-        if (PlayerVertice == HoverVertice) 
+        else 
         {
-            CanArrive = true;
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Return) && PathToFollow.Count > 0) // Se inicia el chequeo del camino desde la posición del jugador.
         {
             string text = CheckDepth(PlayerVertice.Vertice, "Origen - ", 0);
-            if (Weight > 0) 
+            if (Weight > 0)
             {
                 Debug.Log(text + $" ...Costo ${Weight} llegar hasta aquí.");
                 Weight = 0;
             }
-            else if (Weight == 0) 
+            else if (Weight == 0)
             {
                 Debug.Log(text + $" ... No hubo movimiento, sigues en {PlayerVertice.Vertice.Value}, perdiste valioso tiempo.");
             }
             PathToFollow.Clear();
         }
+    }
+
+    private void GraphTravel()
+    {
+        if (PathToFollow.Count > 0 && HoverVertice != null)
+        {
+            CanArrive = CheckCanArrive(HoverVertice.Vertice, PathToFollow.Count - 1);
+        }
+
+        if (PlayerVertice == HoverVertice)
+        {
+            CanArrive = true;
+        }
+
+
 
         if (Input.GetKeyDown(KeyCode.V) && PathToFollow.Count > 0) // Se le envia al grafo 2 vertices a elección.
-        { 
+        {
             Vertice secondVert = PathToFollow.Count > 1 ? PathToFollow[1].Vertice : PathToFollow[0].Vertice;
             AddConnectionBetweenPoints(PathToFollow[0].Vertice, secondVert);
             PathToFollow.Clear();
@@ -123,7 +138,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
         }
     }
 
-    private void AddConnectionBetweenPoints(Vertice VerticeA, Vertice VerticeB)
+    public void AddConnectionBetweenPoints(Vertice VerticeA, Vertice VerticeB)
     {
         if (Graph.AddConnection(VerticeA, VerticeB))
         {
