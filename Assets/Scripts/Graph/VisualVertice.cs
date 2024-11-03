@@ -60,6 +60,7 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (Sprite != null)
         {
             Sprite.color = Color.red;
+            Vertice.spawnGraph.HoverVertice = this;
         }
     }
 
@@ -68,6 +69,7 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (Sprite != null)
         {
             Sprite.color = originalColor;
+            Vertice.spawnGraph.HoverVertice = null;
         }
     }
 

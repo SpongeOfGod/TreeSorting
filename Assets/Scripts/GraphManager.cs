@@ -6,9 +6,12 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     [SerializeField] VisualVertice[] visualVertices; // Contiene todos los vertices iniciales.
     public List<VisualVertice> PathToFollow = new List<VisualVertice>(); // Vertices que forman el camino que se debe tomar.
     public VisualVertice PlayerVertice; // Vertice actual en el que se encuentra el jugador.
-    public bool once;
+    public VisualVertice HoverVertice;
     DynamicGraph<Vertice> Graph; // Grafo dinámico, guarda los vertices.
     private int Weight;
+    public bool CanArrive;
+    private float elapsedTime = 0;
+    [SerializeField] float delayTime = 5;
     void Start()
     {
         Graph = new DynamicGraph<Vertice>();
@@ -41,14 +44,54 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
             }
         }
 
+        while (elapsedTime < delayTime) elapsedTime += Time.deltaTime;
+
+        elapsedTime = 0;
+
         if (verticeToGo == default(Vertice))
         {
             return text + $"{vertice.Value} - No se pudo avanzar por ese camino"; // Si el camino a seguir no cambia, no se pudo avanzar.
         }
         return CheckDepth(verticeToGo, text + vertice.Value + $" → ", indexPath);
     }
+
+    bool CheckCanArrive(Vertice vertice, int currentindexPath)
+    {
+        int indexPath = currentindexPath;
+
+        if (PathToFollow[indexPath] == PlayerVertice) return true;
+
+        indexPath--;
+        Vertice verticeToGo = default(Vertice);
+
+        if (indexPath < 0) return false;
+
+        foreach (var arista in vertice.AristasEntrantes)
+        {
+            if (arista.OriginVert == PathToFollow[indexPath].Vertice)
+            {
+                verticeToGo = arista.OriginVert;
+            }
+        }
+
+        if (verticeToGo == default(Vertice))
+        {
+            return false;
+        }
+        return CheckCanArrive(verticeToGo, indexPath);
+    }
     void Update()
     {
+        if (PathToFollow.Count > 0 && HoverVertice != null) 
+        {
+            CanArrive = CheckCanArrive(HoverVertice.Vertice, PathToFollow.Count - 1);
+        }
+
+        if (PlayerVertice == HoverVertice) 
+        {
+            CanArrive = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.Return) && PathToFollow.Count > 0) // Se inicia el chequeo del camino desde la posición del jugador.
         {
             string text = CheckDepth(PlayerVertice.Vertice, "Origen - ", 0);
