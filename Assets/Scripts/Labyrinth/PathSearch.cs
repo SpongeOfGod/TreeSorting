@@ -52,7 +52,7 @@ public class PathSearch : MonoBehaviour
 
         if (vertice.visited) // Si se ha visitado el nodo, se lo remueve del camino
         {
-            if (verticesPath.Count > 0)
+            if (verticesPath.Count > 0 || graphManager.Labyrinth)
                 verticesPath.RemoveAt(verticesPath.Count - 1);
             return verticesPath;
         }

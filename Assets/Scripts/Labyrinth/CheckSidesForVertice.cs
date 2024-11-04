@@ -5,6 +5,7 @@ using UnityEngine;
 public class CheckSidesForVertice : MonoBehaviour
 {
     bool once;
+    int numberOfPossibilities = 1;
     [SerializeField] GraphManager graphManager;
     [SerializeField] float rayLength = 200f;
     [SerializeField] int connectionWeight = 1;
@@ -13,13 +14,9 @@ public class CheckSidesForVertice : MonoBehaviour
         if (!once) 
         {
             once = true;
+            numberOfPossibilities--;
             foreach (VisualVertice visualVertice in graphManager.VisualVertices) 
             {
-                ////Debug.DrawRay(visualVertice.transform.transform.position, transform.up * rayLength, Color.red, 99f);
-                ////Debug.DrawRay(visualVertice.transform.transform.position, transform.up * -1 * rayLength, Color.red, 99f);
-                ////Debug.DrawRay(visualVertice.transform.transform.position, transform.right * rayLength, Color.red, 99f);
-                ////Debug.DrawRay(visualVertice.transform.transform.position, transform.right * -1 * rayLength, Color.red, 99f);
-
                 VisualVertice upVertice = SpawnRays(visualVertice.transform.position, transform.up, rayLength);
                 VisualVertice downVertice = SpawnRays(visualVertice.transform.position, transform.up * -1, rayLength);
                 VisualVertice leftVertice = SpawnRays(visualVertice.transform.position, transform.right * -1, rayLength);
