@@ -77,14 +77,17 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         Sprite.color = Color.green;
 
-        if (Vertice.spawnGraph.PlayerVertice == null) 
-        {
-            Vertice.spawnGraph.PlayerVertice = this;
-        }
 
-        if (!Vertice.spawnGraph.PathToFollow.Contains(this)) 
+        if (Vertice.spawnGraph.Labyrinth) 
         {
-            Vertice.spawnGraph.PathToFollow.Add(this);
+            if (Vertice.spawnGraph.PlayerVertice == null) 
+            {
+                Vertice.spawnGraph.PlayerVertice = this;
+            }
+        }
+        else 
+        {
+            Vertice.spawnGraph.ExitVertice = this;
         }
     }
 }

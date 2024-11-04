@@ -20,6 +20,11 @@ public class PathSearch : MonoBehaviour
                          // Al chocar con el bloqueo (un nodo vacio o un nodo que ya se ha visitado), se retrocede hasta un nodo
                          // Que tenga caminos por explorar.
 
+        TravelPath(verticesPath);
+    }
+
+    public void TravelPath(List<VisualVertice> verticesPath)
+    {
         elapsedTime += Time.deltaTime;
         if (elapsedTime > delayTime && verticesPath != null)
         {
@@ -30,8 +35,14 @@ public class PathSearch : MonoBehaviour
                 graphManager.PlayerVertice = verticesPath[currentIndex];
                 currentIndex++;
             }
+            else if (currentIndex >= verticesPath.Count && !graphManager.Labyrinth)
+            {
+                verticesPath = null;
+                currentIndex = 0;
+            }
         }
     }
+
     public List<VisualVertice> CheckVerticeSaliente(Vertice vertice, List<VisualVertice> verticesPath)
     {
         if (verticesPath.Contains(graphManager.ExitVertice.Vertice.VerticeVisual))
@@ -41,7 +52,8 @@ public class PathSearch : MonoBehaviour
 
         if (vertice.visited) // Si se ha visitado el nodo, se lo remueve del camino
         {
-            verticesPath.RemoveAt(verticesPath.Count - 1);
+            if (verticesPath.Count > 0)
+                verticesPath.RemoveAt(verticesPath.Count - 1);
             return verticesPath;
         }
 
