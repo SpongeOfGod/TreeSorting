@@ -235,7 +235,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4021294513049730059, guid: 8f46702473890554c88645f42ae7f5a5, type: 3}
       propertyPath: m_Name
-      value: Vertice (3)
+      value: Vertice (2)
       objectReference: {fileID: 0}
     - target: {fileID: 4021294513049730059, guid: 8f46702473890554c88645f42ae7f5a5, type: 3}
       propertyPath: m_IsActive
@@ -871,6 +871,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1081611499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1081611501}
+  - component: {fileID: 1081611500}
+  m_Layer: 0
+  m_Name: ManualConnections
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1081611500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081611499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceafe0af4a525a8479a779084e511a1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verticesConnections:
+  - StartVertice: {fileID: 1422542582}
+    EndVertice: {fileID: 1702908337}
+  - StartVertice: {fileID: 1702908337}
+    EndVertice: {fileID: 1528529970}
+  - StartVertice: {fileID: 1528529970}
+    EndVertice: {fileID: 2053140816}
+  - StartVertice: {fileID: 2053140816}
+    EndVertice: {fileID: 2011809912}
+  - StartVertice: {fileID: 2011809912}
+    EndVertice: {fileID: 1440196929}
+  - StartVertice: {fileID: 1440196929}
+    EndVertice: {fileID: 1779386389}
+  - StartVertice: {fileID: 1779386389}
+    EndVertice: {fileID: 1908666261}
+  graphManager: {fileID: 1216273493}
+--- !u!4 &1081611501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081611499}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 45.109333}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1105614402
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,7 +1047,7 @@ GameObject:
   - component: {fileID: 1216273494}
   - component: {fileID: 1216273493}
   m_Layer: 0
-  m_Name: GraphSpawner
+  m_Name: GraphManager
   m_TagString: Graph
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,8 +1077,12 @@ MonoBehaviour:
   PathToFollow: []
   PlayerVertice: {fileID: 0}
   HoverVertice: {fileID: 0}
-  once: 0
+  ExitVertice: {fileID: 0}
   CanArrive: 0
+  elapsedTime: 0
+  delayTime: 5
+  Labyrinth: 0
+  PathSearch: {fileID: 0}
 --- !u!4 &1216273494
 Transform:
   m_ObjectHideFlags: 0
@@ -1121,7 +1185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphManager: {fileID: 1216273493}
   timeToReach: 5
-  UpOffsetMultiplier: 100
+  UpOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1422542582 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5703997800250517156, guid: 8f46702473890554c88645f42ae7f5a5, type: 3}
@@ -1421,8 +1485,8 @@ RectTransform:
   m_Children:
   - {fileID: 730161457}
   - {fileID: 311861613}
-  - {fileID: 2053140815}
   - {fileID: 423108208}
+  - {fileID: 2053140815}
   - {fileID: 2011809911}
   - {fileID: 1440196928}
   - {fileID: 1765887810}
@@ -1784,7 +1848,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4021294513049730059, guid: 8f46702473890554c88645f42ae7f5a5, type: 3}
       propertyPath: m_Name
-      value: Vertice (2)
+      value: Vertice (3)
       objectReference: {fileID: 0}
     - target: {fileID: 4021294513049730059, guid: 8f46702473890554c88645f42ae7f5a5, type: 3}
       propertyPath: m_IsActive
@@ -1900,3 +1964,4 @@ SceneRoots:
   - {fileID: 1105614406}
   - {fileID: 1982521950}
   - {fileID: 1216273494}
+  - {fileID: 1081611501}
