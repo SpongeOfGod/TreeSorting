@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class VisualNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -11,11 +12,12 @@ public class VisualNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public Nodo Nodo;
     public string ParentNode;
     [SerializeField] private Color originalColor;
-
+    private RectTransform rectTransform;
     private void Awake()
     {
         DataText = GetComponent<TextMeshProUGUI>();
         Sprite = GetComponent<SpriteRenderer>();
+        rectTransform = GetComponent<RectTransform>();
     }
 
     private void Start()
@@ -65,5 +67,10 @@ public class VisualNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerClick(PointerEventData data)
     {
         Sprite.color = Color.green;
+    }
+
+    public void SetVisualPosition(int posY, int offsetMultiplier)
+    {
+        rectTransform.anchoredPosition = new Vector2(Nodo.positionX, posY);
     }
 }

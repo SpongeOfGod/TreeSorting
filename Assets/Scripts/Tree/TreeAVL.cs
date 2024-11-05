@@ -30,7 +30,7 @@
                 node.izq.setParentNode(node);
                 node.izq.visualNode.gameObject.name = "Left";
                 node.izq.positionX = -posX + offsetMultiplier * node.depth;
-                node.izq.SetVisualPosition(posY, offsetMultiplier);
+                node.izq.visualNode.SetVisualPosition(posY, offsetMultiplier);
                 AVLRotationManager.CheckRotations(node.izq);
             }
             else if (value > node.dato)
@@ -42,7 +42,7 @@
                 node.der.visualNode.transform.SetParent(node.visualNode.transform, true);
                 node.der.setParentNode(node);
                 node.der.positionX = posX - offsetMultiplier * node.depth;
-                node.der.SetVisualPosition(posY, offsetMultiplier);
+                node.der.visualNode.SetVisualPosition(posY, offsetMultiplier);
                 AVLRotationManager.CheckRotations(node.der);
             }
             else

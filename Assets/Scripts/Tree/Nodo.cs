@@ -1,13 +1,10 @@
-using UnityEngine;
-using TMPro;
-
 [System.Serializable]
 public class Nodo
 {
     public VisualNode visualNode;
     public int dato;
-    [SerializeField] public Nodo izq;
-    [SerializeField] public Nodo der;
+    public Nodo izq;
+    public Nodo der;
     public Nodo parent;
     public int depth;
     public int positionX = 114;
@@ -25,11 +22,6 @@ public class Nodo
     {
         parent = node;
         depth = parent.depth + 1;
-    }
-
-    public void SetVisualPosition(int posY, int offsetMultiplier)
-    {
-        visualNode.GetComponent<RectTransform>().anchoredPosition = new Vector2(positionX, posY);
     }
 
     public void AssignData(int dato, Nodo izq, Nodo der, Nodo parent, int depth)

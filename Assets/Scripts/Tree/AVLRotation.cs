@@ -99,7 +99,7 @@ using UnityEngine;
         {
             if (nodoGrab != null)
             {
-                nodoGrab.SetVisualPosition(AVLTree.posY, AVLTree.offsetMultiplier);
+                nodoGrab.visualNode.SetVisualPosition(AVLTree.posY, AVLTree.offsetMultiplier);
             }
         }
 
