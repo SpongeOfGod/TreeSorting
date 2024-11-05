@@ -16,6 +16,7 @@
             {
                 depth++;
                 node.izq = InsertNode(node.izq, value);
+                node.izq.visualNode.name = "izq";
                 node.izq.visualNode.ParentNode = node.dato.ToString();
                 node.izq.visualNode.transform.SetParent(node.visualNode.transform, true);
                 node.izq.setParentNode(node);
@@ -27,6 +28,7 @@
             {
                 depth++;
                 node.der = InsertNode(node.der, value);
+                node.der.visualNode.name = "der";
                 node.der.visualNode.ParentNode = node.dato.ToString();
                 node.der.visualNode.transform.SetParent(node.visualNode.transform, true);
                 node.der.setParentNode(node);

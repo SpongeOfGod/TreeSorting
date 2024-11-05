@@ -51,10 +51,13 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
 
     private void GraphTravel()
     {
-        if (PlayerVertice == HoverVertice)
-        {
-            CanArrive = true;
-        }
+        if (HoverVertice != null)
+            foreach (var arista in PlayerVertice.Vertice.AristasSalientes)
+                if (arista.DestinationVert == HoverVertice.Vertice)
+                    CanArrive = true;
+                else
+                    CanArrive = false;
+
 
         if (Input.GetKeyDown(KeyCode.Return) && (ExitVertice != null || ExitVertice != PlayerVertice) && PathToFollow.Count == 0) // Se inicia el chequeo del camino desde la posición del jugador.
         {
@@ -107,31 +110,34 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
         if (Graph.AddConnection(VerticeA, VerticeB, weight))
         {
             Debug.Log($"Added a connection between {VerticeA.Value} (Origin) and {VerticeB.Value} (Destination)");
-
-            VisualVertice visualVerticeA = visualVertices.Find(v => v.Vertice == VerticeA);
-            VisualVertice visualVerticeB = visualVertices.Find(v => v.Vertice == VerticeB);
-
-            if (visualVerticeA != null && visualVerticeB != null)
-            {
-                GameObject connectionObject = Instantiate(line, canvas.transform);
-                LineRenderer lineRenderer = connectionObject.GetComponent<LineRenderer>();
-                lineRenderer.SetPosition(0, visualVerticeA.transform.position);
-                lineRenderer.SetPosition(1, visualVerticeB.transform.position);
-
-                Vector3 direction = (visualVerticeB.transform.position - visualVerticeA.transform.position).normalized;
-
-                Quaternion rotation = Quaternion.FromToRotation(Vector3.up, direction);
-
-                float offsetDistance = 0.56f;
-                Vector3 arrowOffset = -direction * offsetDistance;
-
-                GameObject arrowObject = Instantiate(arrow, visualVerticeB.transform.position + arrowOffset, rotation, canvas.transform);
-            }
-
+            LineArrowGenerator(VerticeA, VerticeB);
         }
         else
         {
             Debug.Log($"Couldn't add connection - Connection already exists between {VerticeA.Value} (Origin) and {VerticeB.Value} (Destination)");
+        }
+    }
+
+    private void LineArrowGenerator(Vertice VerticeA, Vertice VerticeB)
+    {
+        VisualVertice visualVerticeA = visualVertices.Find(v => v.Vertice == VerticeA);
+        VisualVertice visualVerticeB = visualVertices.Find(v => v.Vertice == VerticeB);
+
+        if (visualVerticeA != null && visualVerticeB != null)
+        {
+            GameObject connectionObject = Instantiate(line, canvas.transform);
+            LineRenderer lineRenderer = connectionObject.GetComponent<LineRenderer>();
+            lineRenderer.SetPosition(0, visualVerticeA.transform.position);
+            lineRenderer.SetPosition(1, visualVerticeB.transform.position);
+
+            Vector3 direction = (visualVerticeB.transform.position - visualVerticeA.transform.position).normalized;
+
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.up, direction);
+
+            float offsetDistance = 0.56f;
+            Vector3 arrowOffset = -direction * offsetDistance;
+
+            GameObject arrowObject = Instantiate(arrow, visualVerticeB.transform.position + arrowOffset, rotation, canvas.transform);
         }
     }
 }
