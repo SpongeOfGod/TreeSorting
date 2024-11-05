@@ -23,11 +23,13 @@
             {
                 depth++;
                 node.izq = InsertNode(node.izq, value);
-                node.izq.parent = node;
                 node.izq.visualNode.ParentNode = node.dato.ToString();
+            
+            
                 node.izq.visualNode.transform.SetParent(node.visualNode.transform, true);
-                node.izq.positionX = -posX;
-                node.izq.depth = CheckDepth(node) + 1;
+                node.izq.setParentNode(node);
+                node.izq.visualNode.gameObject.name = "Left";
+                node.izq.positionX = -posX + offsetMultiplier * node.depth;
                 node.izq.SetVisualPosition(posY, offsetMultiplier);
                 AVLRotationManager.CheckRotations(node.izq);
             }
@@ -35,11 +37,11 @@
             {
                 depth++;
                 node.der = InsertNode(node.der, value);
-                node.der.parent = node;
                 node.der.visualNode.ParentNode = node.dato.ToString();
+                node.der.visualNode.gameObject.name = "Right";
                 node.der.visualNode.transform.SetParent(node.visualNode.transform, true);
-                node.der.positionX = posX;
-                node.der.depth = CheckDepth(node) + 1;
+                node.der.setParentNode(node);
+                node.der.positionX = posX - offsetMultiplier * node.depth;
                 node.der.SetVisualPosition(posY, offsetMultiplier);
                 AVLRotationManager.CheckRotations(node.der);
             }

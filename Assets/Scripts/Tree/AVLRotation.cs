@@ -1,15 +1,10 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 
 [System.Serializable]
     public class AVLRotation
     {
         public TreeAVL AVLTree;
-        [SerializeField] public float Seconds = 1f;
-        [SerializeField] public float leftPosX = -60;
-        [SerializeField] public float rightPosX = 50;
-        [SerializeField] public float posY = -144;
-
-        [SerializeField] public float offsetMultiplier = 3;
         [SerializeField] Nodo p;
         [SerializeField] Nodo q;
         public bool rotationOcurred;
@@ -104,7 +99,7 @@
         {
             if (nodoGrab != null)
             {
-                nodoGrab.visualNode.GetComponent<RectTransform>().anchoredPosition = new Vector2(posX * (/*offsetMultiplier / */(depth + 1)), posY);
+                nodoGrab.SetVisualPosition(AVLTree.posY, AVLTree.offsetMultiplier);
             }
         }
 
@@ -130,15 +125,17 @@
             }
 
             tempQ.der = tempP;
-            tempQ.der.parent = tempQ;
+            tempQ.der.setParentNode(tempQ);
+            tempQ.der.visualNode.gameObject.name = "Right";
+            tempQ.der.positionX = AVLTree.posX - AVLTree.offsetMultiplier * tempQ.depth;
             tempQ.der.visualNode.transform.parent = tempQ.visualNode.transform;
-            tempQ.der.depth = tempQ.depth + 1;
 
-            if (tempQ.izq != null)
-            {
-                tempQ.izq.depth = tempQ.depth + 1;
-            }
-            newPos(tempQ.der, rightPosX, tempQ.der.depth);
+            //if (tempQ.izq != null)
+            //{
+            //    tempQ.izq.depth = tempQ.depth + 1;
+            //}
+
+            newPos(tempQ.der, AVLTree.posX, tempQ.der.depth);
 
             EraseReferenceOfNode(tempQ.der, tempQ);
 
@@ -167,16 +164,17 @@
             }
 
             tempQ.izq = tempP;
-            tempQ.izq.parent = tempQ;
+            tempQ.izq.setParentNode(tempQ);
+            tempQ.izq.visualNode.gameObject.name = "Left";
+            tempQ.izq.positionX = -AVLTree.posX + AVLTree.offsetMultiplier * tempQ.depth;
             tempQ.izq.visualNode.transform.parent = tempQ.visualNode.transform;
-            tempQ.izq.depth = tempQ.depth + 1;
-            newPos(tempQ.izq, leftPosX, tempQ.izq.depth);
+            newPos(tempQ.izq, -AVLTree.posX, tempQ.izq.depth);
 
 
-            if (tempQ.der != null)
-            {
-                tempQ.der.depth = tempQ.depth + 1;
-            }
+            //if (tempQ.der != null)
+            //{
+            //    tempQ.der.depth = tempQ.depth + 1;
+            //}
             EraseReferenceOfNode(tempQ.izq, tempQ);
 
             q = tempQ;
@@ -185,17 +183,20 @@
         public void ReOrderNodeToRight(Nodo parentNode, Nodo node)
         {
             parentNode.parent.der = node;
-            parentNode.parent.der.parent = parentNode.parent;
+            parentNode.parent.der.setParentNode(parentNode);
+            parentNode.parent.der.visualNode.gameObject.name = "Right";
+            parentNode.parent.der.positionX = AVLTree.posX - AVLTree.offsetMultiplier * parentNode.parent.depth;
             parentNode.parent.der.visualNode.transform.parent = parentNode.parent.visualNode.transform;
-            parentNode.parent.der.depth = parentNode.parent.depth + 1;
-            newPos(parentNode.parent.der, rightPosX, parentNode.parent.der.depth);
+            newPos(parentNode.parent.der, AVLTree.posX, parentNode.parent.depth);
         }
 
         public void ReOrderNodeToLeft(Nodo parentNode, Nodo node)
         {
             parentNode.parent.izq = node;
+            parentNode.parent.izq.setParentNode(parentNode);
+            parentNode.parent.izq.visualNode.gameObject.name = "Left";
+            parentNode.parent.izq.positionX = -AVLTree.posX + AVLTree.offsetMultiplier * parentNode.parent.depth;
             parentNode.parent.izq.visualNode.transform.parent = parentNode.parent.visualNode.transform;
-            parentNode.parent.izq.depth = parentNode.parent.depth + 1;
-            newPos(parentNode.parent.izq, leftPosX, parentNode.parent.izq.depth);
+            newPos(parentNode.parent.izq, -AVLTree.posX, parentNode.parent.depth);
         }
     }

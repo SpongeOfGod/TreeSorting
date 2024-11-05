@@ -1575,9 +1575,9 @@ MonoBehaviour:
             AVLRotationManager:
               AVLTree:
                 posY: -144
-                offsetMultiplier: 3
+                offsetMultiplier: 30
                 depth: 0
-                posX: 114
+                posX: 300
                 AVLRotationManager:
                   AVLTree:
                     posY: -144
@@ -1590,11 +1590,6 @@ MonoBehaviour:
                         offsetMultiplier: 3
                         depth: 0
                         posX: 114
-                      Seconds: 0
-                      leftPosX: 0
-                      rightPosX: 0
-                      posY: 0
-                      offsetMultiplier: 0
                       p:
                         dato: 0
                         depth: 0
@@ -1604,11 +1599,6 @@ MonoBehaviour:
                         depth: 0
                         positionX: 0
                       rotationOcurred: 0
-                  Seconds: 0
-                  leftPosX: 0
-                  rightPosX: 0
-                  posY: 0
-                  offsetMultiplier: 0
                   p:
                     visualNode: {fileID: 0}
                     dato: 0
@@ -1620,11 +1610,6 @@ MonoBehaviour:
                     depth: 0
                     positionX: 0
                   rotationOcurred: 0
-              Seconds: 0
-              leftPosX: 0
-              rightPosX: 50
-              posY: -144
-              offsetMultiplier: 3
               p:
                 visualNode: {fileID: 0}
                 dato: 0
@@ -1636,11 +1621,6 @@ MonoBehaviour:
                 depth: 0
                 positionX: 0
               rotationOcurred: 0
-          Seconds: 0
-          leftPosX: 0
-          rightPosX: 0
-          posY: 0
-          offsetMultiplier: 0
           p:
             visualNode: {fileID: 0}
             dato: 0
@@ -1652,11 +1632,6 @@ MonoBehaviour:
             depth: 0
             positionX: 0
           rotationOcurred: 0
-      Seconds: 0
-      leftPosX: 0
-      rightPosX: 0
-      posY: 0
-      offsetMultiplier: 0
       p:
         visualNode: {fileID: 0}
         dato: 0
