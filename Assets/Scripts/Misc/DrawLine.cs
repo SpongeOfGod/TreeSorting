@@ -18,25 +18,34 @@ public class DrawLine : MonoBehaviour
             {
                 lineInstance.positionCount = 2;
                 UpdateLinePositions();
+                UpdateLineName();
             }
         }
     }
 
     void Update()
     {
+
         if (transform.parent != parentTransform)
         {
             parentTransform = transform.parent;
 
             if (parentTransform == null)
             {
-                Debug.LogWarning(gameObject + " es la raíz o no tiene padre.");
                 Destroy(this);
                 return;
             }
 
             UpdateLinePositions();
+            UpdateLineName();
         }
+        else if (parentTransform.gameObject.name == "Parent")
+        {
+            Destroy(lineInstance.gameObject);
+            Destroy(this);
+            return;
+        }
+
     }
 
     void UpdateLinePositions()
@@ -49,6 +58,16 @@ public class DrawLine : MonoBehaviour
             }
             lineInstance.SetPosition(0, parentTransform.position);
             lineInstance.SetPosition(1, transform.position);
+        }
+    }
+
+    void UpdateLineName()
+    {
+        if (lineInstance != null)
+        {
+            string name1 = parentTransform.gameObject.name;
+            string name2 = transform.gameObject.name;
+            lineInstance.gameObject.name = $"Line ({name1} -> {name2})";
         }
     }
 }

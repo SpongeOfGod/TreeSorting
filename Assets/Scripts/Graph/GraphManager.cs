@@ -4,6 +4,9 @@ using UnityEngine;
 public class GraphManager : MonoBehaviour // Manager de Grafo.
 {
     [SerializeField] List<VisualVertice> visualVertices = new List<VisualVertice>(); // Contiene todos los vertices iniciales.
+    [SerializeField] private GameObject line;
+    [SerializeField] private GameObject arrow;
+    [SerializeField] private Canvas canvas;
     [SerializeField] private float elapsedTime = 0;
     [SerializeField] float delayTime = 5;
     [SerializeField] public bool Labyrinth = false;
@@ -18,13 +21,14 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     public string textShow = string.Empty;
 
     private int Weight;
+
     void Start()
     {
         Graph = new DynamicGraph<Vertice>();
 
         Graph.InitializeGraph(this);
 
-        foreach (var vertice in visualVertices) 
+        foreach (var vertice in visualVertices)
         {
             Graph.AddVertice(vertice.Vertice);
         }
@@ -32,13 +36,14 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
         if (!Labyrinth)
             PlayerVertice = visualVertices[0];
     }
+
     void Update()
     {
         if (!Labyrinth)
         {
             GraphTravel();
         }
-        else 
+        else
         {
             PathSearch.RunUpdate();
         }
@@ -53,7 +58,6 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
 
         if (Input.GetKeyDown(KeyCode.Return) && (ExitVertice != null || ExitVertice != PlayerVertice) && PathToFollow.Count == 0) // Se inicia el chequeo del camino desde la posición del jugador.
         {
-
             foreach (VisualVertice visualVertice in visualVertices)
             {
                 visualVertice.Vertice.visited = false;
@@ -84,7 +88,6 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
 
         if (PathToFollow.Count > 0)
         {
-
             foreach (VisualVertice visualVertice in visualVertices)
             {
                 visualVertice.Vertice.visited = false;
@@ -104,10 +107,31 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
         if (Graph.AddConnection(VerticeA, VerticeB, weight))
         {
             Debug.Log($"Added a connection between {VerticeA.Value} (Origin) and {VerticeB.Value} (Destination)");
+
+            VisualVertice visualVerticeA = visualVertices.Find(v => v.Vertice == VerticeA);
+            VisualVertice visualVerticeB = visualVertices.Find(v => v.Vertice == VerticeB);
+
+            if (visualVerticeA != null && visualVerticeB != null)
+            {
+                GameObject connectionObject = Instantiate(line, canvas.transform);
+                LineRenderer lineRenderer = connectionObject.GetComponent<LineRenderer>();
+                lineRenderer.SetPosition(0, visualVerticeA.transform.position);
+                lineRenderer.SetPosition(1, visualVerticeB.transform.position);
+
+                Vector3 direction = (visualVerticeB.transform.position - visualVerticeA.transform.position).normalized;
+
+                Quaternion rotation = Quaternion.FromToRotation(Vector3.up, direction);
+
+                float offsetDistance = 0.56f;
+                Vector3 arrowOffset = -direction * offsetDistance;
+
+                GameObject arrowObject = Instantiate(arrow, visualVerticeB.transform.position + arrowOffset, rotation, canvas.transform);
+            }
+
         }
         else
         {
-            Debug.Log($"Couldn't add connection - Connection already exits between {VerticeA.Value} (Origin) and {VerticeB.Value} (Destination)");
+            Debug.Log($"Couldn't add connection - Connection already exists between {VerticeA.Value} (Origin) and {VerticeB.Value} (Destination)");
         }
     }
 }
