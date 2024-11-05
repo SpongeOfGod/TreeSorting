@@ -8,7 +8,7 @@ using UnityEngine;
     public int posY = -144;
     public int offsetMultiplier = 3;
     public int depth = 0;
-    public int posX = 114;
+    public int posX = 10;
 
     public virtual void Initialize() { }
     public virtual Nodo InsertNode(Nodo node, int value)

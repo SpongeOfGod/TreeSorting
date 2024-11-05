@@ -1557,9 +1557,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AVLTree:
     posY: -144
-    offsetMultiplier: 3
+    offsetMultiplier: 75
     depth: 0
-    posX: 50
+    posX: 300
     AVLRotationManager:
       AVLTree:
         posY: -144

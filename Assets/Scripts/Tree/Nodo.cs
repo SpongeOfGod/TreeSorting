@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Diagnostics.Contracts;
+using UnityEditor.Experimental.GraphView;
 
 [System.Serializable]
 public class Nodo
@@ -21,9 +22,14 @@ public class Nodo
         this.dato = dato;
     }
 
+    public void setParentNode(Nodo node) 
+    {
+        parent = node;
+        depth = parent.depth + 1;
+    }
     public void SetVisualPosition(int posY, int offsetMultiplier) 
     {
-        visualNode.GetComponent<RectTransform>().anchoredPosition = new Vector2(positionX * (depth + 1), posY);
+        visualNode.GetComponent<RectTransform>().anchoredPosition = new Vector2(positionX, posY);
     }
 
     public void AssignData(int dato, Nodo izq, Nodo der, Nodo parent, int depth)

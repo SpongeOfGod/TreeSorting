@@ -18,9 +18,10 @@
                 node.izq = InsertNode(node.izq, value);
                 node.izq.visualNode.ParentNode = node.dato.ToString();
                 node.izq.visualNode.transform.SetParent(node.visualNode.transform, true);
-                node.izq.positionX = -posX;
-                node.izq.depth = CheckDepth(node) + 1;
+                node.izq.setParentNode(node);
+                node.izq.positionX = -posX + offsetMultiplier * node.depth;
                 node.izq.SetVisualPosition(posY, offsetMultiplier);
+                depth = 0;
             } 
             else if (value > node.dato) 
             {
@@ -28,16 +29,16 @@
                 node.der = InsertNode(node.der, value);
                 node.der.visualNode.ParentNode = node.dato.ToString();
                 node.der.visualNode.transform.SetParent(node.visualNode.transform, true);
-                node.der.positionX = posX;
-                node.der.depth = CheckDepth(node) + 1;
+                node.der.setParentNode(node);
+                node.der.positionX = posX - offsetMultiplier * node.depth;
                 node.der.SetVisualPosition(posY, offsetMultiplier);
+                depth = 0;
             }
             else
             {
                 return node;
             }
 
-            depth = 0;
             return node;
         }
     }
