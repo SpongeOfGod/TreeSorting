@@ -1,12 +1,9 @@
-﻿using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
     public class AVLRotation
     {
         public TreeAVL AVLTree;
-        [SerializeField] Nodo p;
-        [SerializeField] Nodo q;
+        Nodo p;
+        Nodo q;
         public bool rotationOcurred;
 
         public AVLRotation(TreeAVL treeAVL)
@@ -27,8 +24,6 @@ using UnityEngine;
 
             int balance = AVLTree.CheckDepth(nodo.der) - AVLTree.CheckDepth(nodo.izq);
 
-            Debug.Log(balance);
-
             int balanceSubRight = 0;
             if (nodo.der != null)
             {
@@ -37,13 +32,11 @@ using UnityEngine;
 
             if (balance > 1 && balanceSubRight >= 0)
             {
-                Debug.Log("Rotación Simple Izquierda");
                 rotationOcurred = true;
                 RotacionIzquierda(q, p);
             }
             else if (balance > 1 && balanceSubRight < 0)
             {
-                Debug.Log("Doble Rotación Izquierda");
                 rotationOcurred = true;
                 RotacionDerecha(q.izq, q);
                 RotacionIzquierda(q, p);
@@ -61,25 +54,20 @@ using UnityEngine;
                 balanceSubLeft = AVLTree.CheckDepth(nodo.izq.der) - AVLTree.CheckDepth(nodo.izq.izq);
             }
 
-            Debug.Log(balance);
-
             p = nodo;
             q = p.izq;
 
 
             if (balance < -1 && balanceSubLeft <= 0)
             {
-                Debug.Log("Rotación Simple Derecha");
                 rotationOcurred = true;
                 RotacionDerecha(q, p);
             }
             else if (balance < -1 && balanceSubLeft > 0)
             {
-                Debug.Log("Doble Rotación Derecha");
                 rotationOcurred = true;
                 RotacionIzquierda(q.der, q);
                 RotacionDerecha(q, p);
-                //StartCoroutine(DelayOrderRight(p.izq, p));
             }
         }
 
@@ -130,11 +118,6 @@ using UnityEngine;
             tempQ.der.positionX = AVLTree.posX - AVLTree.offsetMultiplier * tempQ.depth;
             tempQ.der.visualNode.transform.parent = tempQ.visualNode.transform;
 
-            //if (tempQ.izq != null)
-            //{
-            //    tempQ.izq.depth = tempQ.depth + 1;
-            //}
-
             newPos(tempQ.der, AVLTree.posX, tempQ.der.depth);
 
             EraseReferenceOfNode(tempQ.der, tempQ);
@@ -170,11 +153,6 @@ using UnityEngine;
             tempQ.izq.visualNode.transform.parent = tempQ.visualNode.transform;
             newPos(tempQ.izq, -AVLTree.posX, tempQ.izq.depth);
 
-
-            //if (tempQ.der != null)
-            //{
-            //    tempQ.der.depth = tempQ.depth + 1;
-            //}
             EraseReferenceOfNode(tempQ.izq, tempQ);
 
             q = tempQ;

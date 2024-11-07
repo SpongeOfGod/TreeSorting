@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
     public class TreeAVL : TreeStructure
     {
-        [SerializeField]  private AVLRotation AVLRotationManager;
+        private AVLRotation AVLRotationManager;
 
         public override void Initialize()
         {

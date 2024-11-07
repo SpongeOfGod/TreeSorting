@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
+﻿using System;
+using System.Collections.Generic;
 public class DynamicTDA<T> : TDA<T>
 {
     List<T> datas = new List<T>();
@@ -36,7 +35,8 @@ public class DynamicTDA<T> : TDA<T>
 
     public override T Show()
     {
-        int index = Random.Range(0, Cardinality());
+        Random random = new Random();
+        int index = random.Next(0, Cardinality());
         return datas[index];
     }
     public override bool Contains(T element)

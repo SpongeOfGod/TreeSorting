@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 
 public class DynamicGraph<T> : GraphTDA<T> // Grafo dinámico que hereda del conjunto grafo.
 {
     public DynamicTDA<T> verticesData;
     GraphManager spawnGraph;
-    [SerializeField] Dictionary<T, List<(T, Arista)>> adyacentList = new Dictionary<T, List<(T, Arista)>>();
+    Dictionary<T, List<(T, Arista)>> adyacentList = new Dictionary<T, List<(T, Arista)>>();
 
     // ↑
     // Diccionario de vertices, cada uno contiene listas de (vertices, y aristas), simulando filas y columnas.
@@ -66,7 +66,8 @@ public class DynamicGraph<T> : GraphTDA<T> // Grafo dinámico que hereda del con
                 Arista connectionBetween = null;
                 if (weight == 0) 
                 {
-                    connectionBetween = new Arista(Random.Range(1, 100)); // Arista: Contiene un punto de origen y un punto final.
+                    Random random = new Random();
+                    connectionBetween = new Arista(random.Next(1, 100)); // Arista: Contiene un punto de origen y un punto final.
                 }
                 else 
                 {

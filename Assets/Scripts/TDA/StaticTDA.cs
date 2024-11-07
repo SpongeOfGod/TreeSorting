@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using System;
 
 public class StaticTDA<T> : TDA<T>
 {
@@ -45,7 +45,8 @@ public class StaticTDA<T> : TDA<T>
 
     public override T Show() 
     {
-        int index = Random.Range(0, Cardinality());
+        Random random = new Random();
+        int index = random.Next(0, Cardinality());
         return datas[index];
     }
     public override bool Contains(T element)
