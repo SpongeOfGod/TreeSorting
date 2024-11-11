@@ -60,14 +60,14 @@ public class PathSearch : MonoBehaviour
         verticesPath.Add(vertice.VerticeVisual);
 
         VisualVertice currentVert = vertice.VerticeVisual;
-
-        if (vertice.AristasSalientes.Count > 0) // Si tiene más de una arista que lleve a otro nodo
+        graphManager.Graph.adyacentList.TryGetValue(vertice, out List<(Vertice, Arista)> AristasSalientes);
+        if (AristasSalientes.Count > 0) // Si tiene más de una arista que lleve a otro nodo
         {
-            for (int i = 0; i < vertice.AristasSalientes.Count; i++) // Se comprueba que no sea un nodo ya visitado
+            for (int i = 0; i < AristasSalientes.Count; i++) // Se comprueba que no sea un nodo ya visitado
             {
-                if (!vertice.AristasSalientes[i].DestinationVert.visited && !verticesPath.Contains(graphManager.ExitVertice.Vertice.VerticeVisual))
+                if (!AristasSalientes[i].Item2.DestinationVert.visited && !verticesPath.Contains(graphManager.ExitVertice.Vertice.VerticeVisual))
                 {
-                    currentVert = vertice.AristasSalientes[i].DestinationVert.VerticeVisual;
+                    currentVert = AristasSalientes[i].Item2.DestinationVert.VerticeVisual;
                     verticesPath = CheckVerticeSaliente(currentVert.Vertice, verticesPath); // Recursividad - Crea una lista partir del vertice elegido.
                 }
             }

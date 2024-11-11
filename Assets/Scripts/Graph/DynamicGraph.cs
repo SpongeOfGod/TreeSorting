@@ -5,7 +5,7 @@ public class DynamicGraph<T> : GraphTDA<T> // Grafo dinámico que hereda del con
 {
     public DynamicTDA<T> verticesData;
     GraphManager spawnGraph;
-    Dictionary<T, List<(T, Arista)>> adyacentList = new Dictionary<T, List<(T, Arista)>>();
+    public Dictionary<T, List<(T, Arista)>> adyacentList = new Dictionary<T, List<(T, Arista)>>();
 
     // ↑
     // Diccionario de vertices, cada uno contiene listas de (vertices, y aristas), simulando filas y columnas.

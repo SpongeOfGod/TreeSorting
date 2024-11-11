@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     public GraphManager spawnGraph;
     public TextMeshProUGUI DataText;
@@ -57,23 +58,23 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData data)
     {
-        if (Sprite != null)
+        if (Sprite != null && !Vertice.spawnGraph.InSearch && !Vertice.spawnGraph.Labyrinth)
         {
             Sprite.color = Color.red;
-            Vertice.spawnGraph.HoverVertice = this;
+            Vertice.spawnGraph.ExitVertice = this;
         }
     }
 
     public void OnPointerExit(PointerEventData data)
     {
-        if (Sprite != null)
+        if (Sprite != null && !Vertice.spawnGraph.InSearch && !Vertice.spawnGraph.Labyrinth)
         {
             Sprite.color = originalColor;
             Vertice.spawnGraph.HoverVertice = null;
         }
     }
 
-    public void OnPointerClick(PointerEventData data)
+    public void OnPointerDown(PointerEventData data)
     {
         Sprite.color = Color.green;
 
@@ -89,5 +90,10 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             Vertice.spawnGraph.ExitVertice = this;
         }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Sprite.color = originalColor;
     }
 }

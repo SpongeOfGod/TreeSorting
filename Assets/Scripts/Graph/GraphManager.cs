@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GraphManager : MonoBehaviour // Manager de Grafo.
@@ -18,6 +19,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     public VisualVertice ExitVertice;
     public DynamicGraph<Vertice> Graph; // Grafo dinámico, guarda los vertices.
     public bool CanArrive;
+    public bool InSearch = false;
     public string textShow = string.Empty;
 
     private int Weight;
@@ -59,8 +61,9 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
                     CanArrive = false;
 
 
-        if (Input.GetKeyDown(KeyCode.Return) && (ExitVertice != null || ExitVertice != PlayerVertice) && PathToFollow.Count == 0) // Se inicia el chequeo del camino desde la posición del jugador.
+        if (Input.GetMouseButtonDown(0) && (ExitVertice != null || ExitVertice != PlayerVertice) && PathToFollow.Count == 0 && !InSearch) // Se inicia el chequeo del camino desde la posición del jugador.
         {
+            InSearch = true;
             foreach (VisualVertice visualVertice in visualVertices)
             {
                 visualVertice.Vertice.visited = false;
@@ -102,6 +105,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
         if (PlayerVertice == ExitVertice)
         {
             PathToFollow.Clear();
+            InSearch = false;
         }
     }
 
