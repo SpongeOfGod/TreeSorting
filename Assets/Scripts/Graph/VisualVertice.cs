@@ -29,19 +29,30 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private void Start()
     {
         Color generatedColor;
-        do
+
+        if (spawnGraph.Labyrinth)
         {
-            int randomR = Random.Range(50, 200);
-            int randomG = Random.Range(50, 200);
-            int randomB = Random.Range(50, 200);
-            generatedColor = new Color32((byte)randomR, (byte)randomG, (byte)randomB, 255);
+            generatedColor = new Color32(30, 30, 30, 255);
         }
-        while (IsTooLight(generatedColor) || IsPrimaryColor(generatedColor));
+        else
+        {
+            do
+            {
+                int randomR = Random.Range(50, 200);
+                int randomG = Random.Range(50, 200);
+                int randomB = Random.Range(50, 200);
+                generatedColor = new Color32((byte)randomR, (byte)randomG, (byte)randomB, 255);
+            }
+            while (IsTooLight(generatedColor) || IsPrimaryColor(generatedColor));
+        }
 
         originalColor = generatedColor;
         Sprite.color = originalColor;
-        DataText.text = spawnGraph.Labyrinth ? gameObject.name : Vertice.Value.ToString();
+
+        string verticeText = spawnGraph.Labyrinth ? gameObject.name : Vertice.Value.ToString();
+        DataText.text = verticeText;
     }
+
 
     private bool IsTooLight(Color color) // Comprueba si los valores (r)ed, (g)reen, (b)lue pasan cierto limite.
     {

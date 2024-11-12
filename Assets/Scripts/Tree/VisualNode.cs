@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class VisualNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class VisualNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI DataText;
     public SpriteRenderer Sprite;
@@ -59,11 +59,6 @@ public class VisualNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             Sprite.color = originalColor;
         }
-    }
-
-    public void OnPointerClick(PointerEventData data)
-    {
-        Sprite.color = Color.green;
     }
 
     public void SetVisualPosition(int posY, int offsetMultiplier)

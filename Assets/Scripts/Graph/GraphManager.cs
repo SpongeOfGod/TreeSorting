@@ -113,7 +113,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
 
     public void AddConnectionBetweenPoints(Vertice VerticeA, Vertice VerticeB, int weight)
     {
-        if (Graph.AddConnection(VerticeA, VerticeB, weight))
+        if (Graph.AddConnection(VerticeA, VerticeB, weight) && !Labyrinth)
         {
             Debug.Log($"Added a connection between {VerticeA.Value} (Origin) and {VerticeB.Value} (Destination)");
             LineArrowGenerator(VerticeA, VerticeB);
