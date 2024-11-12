@@ -24,8 +24,6 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         spawnGraph = gameObject.GetComponent<GraphManager>();
         int VerticeData = Random.Range(1, 100);
         Vertice = new Vertice(VerticeData, this, spawnGraph);
-        
-        DataText.text = Vertice.Value.ToString();
     }
 
     private void Start()
@@ -42,6 +40,7 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         originalColor = generatedColor;
         Sprite.color = originalColor;
+        DataText.text = spawnGraph.Labyrinth ? gameObject.name : Vertice.Value.ToString();
     }
 
     private bool IsTooLight(Color color) // Comprueba si los valores (r)ed, (g)reen, (b)lue pasan cierto limite.

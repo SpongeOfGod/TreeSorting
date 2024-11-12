@@ -22,12 +22,11 @@ public class TreeSearch : MonoBehaviour
         testSpawnTree = SpawnABBTree == null ? SpawnAVLTree.AVLTree : SpawnABBTree.ABBTree;
     }
 
-    private void Start()
+    private void FixedUpdate()
     {
-        int depth = CheckDepth(testSpawnTree.root);
+        int depth = CheckDepth(testSpawnTree.root);    
         depthDisplay.text = depth.ToString();    
     }
-
     int CheckDepth(Nodo nodo) 
     {
         if (nodo == null) return -1;
