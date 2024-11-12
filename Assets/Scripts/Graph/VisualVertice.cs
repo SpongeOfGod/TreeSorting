@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerUpHandler
 {
     public GraphManager spawnGraph;
     public TextMeshProUGUI DataText;
@@ -70,11 +70,11 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (Sprite != null && !Vertice.spawnGraph.InSearch && !Vertice.spawnGraph.Labyrinth)
         {
             Sprite.color = originalColor;
-            Vertice.spawnGraph.HoverVertice = null;
+            Vertice.spawnGraph.ExitVertice = null;
         }
     }
 
-    public void OnPointerDown(PointerEventData data)
+    public void OnPointerClick(PointerEventData data)
     {
         Sprite.color = Color.green;
 

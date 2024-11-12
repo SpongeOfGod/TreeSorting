@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -61,7 +62,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
                     CanArrive = false;
 
 
-        if (Input.GetMouseButtonDown(0) && (ExitVertice != null || ExitVertice != PlayerVertice) && PathToFollow.Count == 0 && !InSearch) // Se inicia el chequeo del camino desde la posición del jugador.
+        if (Input.GetMouseButtonDown(0) && (ExitVertice != null || ExitVertice != PlayerVertice) && PathToFollow.Count == 0 && !InSearch && PlayerVertice != null) // Se inicia el chequeo del camino desde la posición del jugador.
         {
             InSearch = true;
             foreach (VisualVertice visualVertice in visualVertices)
@@ -70,8 +71,9 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
             }
             PlayerVertice.Vertice.visited = false;
 
-            PathToFollow = PathSearch.CheckVerticeSaliente(PlayerVertice.Vertice, PathToFollow);
-
+            PathToFollow.AddRange(PathSearch.CheckVerticeSaliente(PlayerVertice.Vertice, PathToFollow).Distinct());
+            PathToFollow.Reverse();
+            
             textShow = string.Empty;
             if (PathToFollow.Count > 1)
                 foreach (var vertice in PathToFollow)

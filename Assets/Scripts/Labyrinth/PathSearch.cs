@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PathSearch : MonoBehaviour
@@ -44,23 +45,31 @@ public class PathSearch : MonoBehaviour
 
     public List<VisualVertice> CheckVerticeSaliente(Vertice vertice, List<VisualVertice> verticesPath)
     {
-        if (verticesPath.Contains(graphManager.ExitVertice.Vertice.VerticeVisual))
+        if (graphManager.ExitVertice == null) return null;
+        List<VisualVertice> currentPath = new List<VisualVertice>();
+
+        if (verticesPath.Contains(graphManager.ExitVertice.Vertice.VerticeVisual) && !graphManager.Labyrinth)
         {
             return verticesPath;
         }
 
         if (vertice.visited) // Si se ha visitado el nodo, se lo remueve del camino
         {
-            if (verticesPath.Count > 0 || graphManager.Labyrinth)
+            if (verticesPath.Count > 0)
                 verticesPath.RemoveAt(verticesPath.Count - 1);
             return verticesPath;
         }
 
-        vertice.visited = true;
-        verticesPath.Add(vertice.VerticeVisual);
+        if (graphManager.Labyrinth) 
+        {
+            vertice.visited = true;
+        }
+        currentPath.Add(vertice.VerticeVisual);
 
         VisualVertice currentVert = vertice.VerticeVisual;
         graphManager.Graph.adyacentList.TryGetValue(vertice, out List<(Vertice, Arista)> AristasSalientes);
+
+        List<List<VisualVertice>> Paths = new List<List<VisualVertice>>();
         if (AristasSalientes.Count > 0) // Si tiene más de una arista que lleve a otro nodo
         {
             for (int i = 0; i < AristasSalientes.Count; i++) // Se comprueba que no sea un nodo ya visitado
@@ -68,16 +77,39 @@ public class PathSearch : MonoBehaviour
                 if (!AristasSalientes[i].Item2.DestinationVert.visited && !verticesPath.Contains(graphManager.ExitVertice.Vertice.VerticeVisual))
                 {
                     currentVert = AristasSalientes[i].Item2.DestinationVert.VerticeVisual;
-                    verticesPath = CheckVerticeSaliente(currentVert.Vertice, verticesPath); // Recursividad - Crea una lista partir del vertice elegido.
+                    List<VisualVertice> vertices = new List<VisualVertice>();
+                    currentPath.Clear();
+                    currentPath.Add(vertice.VerticeVisual);
+                    vertices = currentPath;
+                    vertices.AddRange(verticesPath);
+                    vertices = CheckVerticeSaliente(currentVert.Vertice, vertices);
+                    Paths.Add(vertices); // Recursividad - Crea una lista partir del vertice elegido.
+                }
+            }
+
+            if (Paths.Count > 0) 
+            {
+                currentPath = Paths[0];
+                foreach (var item in Paths)
+                {
+                    if (currentPath.Count > item.Count && item.Contains(graphManager.ExitVertice)) 
+                    {
+                        currentPath = item;
+                    }
                 }
             }
         }
 
         if (vertice == graphManager.ExitVertice.Vertice)
         {
-            return verticesPath;
+            currentPath.AddRange(verticesPath);
+            return currentPath;
+        }
+        else
+        {
+            vertice.visited = true;
         }
 
-        return CheckVerticeSaliente(currentVert.Vertice, verticesPath); // Cuando se llega a un camino sin saluda, se regresa.
+        return CheckVerticeSaliente(currentVert.Vertice, currentPath); // Cuando se llega a un camino sin saluda, se regresa.
     }
 }
