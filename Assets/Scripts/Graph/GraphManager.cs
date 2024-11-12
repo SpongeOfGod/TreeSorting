@@ -71,7 +71,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
             }
             PlayerVertice.Vertice.visited = false;
 
-            PathToFollow.AddRange(PathSearch.CheckVerticeSaliente(PlayerVertice.Vertice, PathToFollow).Distinct());
+            PathToFollow.AddRange(PathSearch.CheckVerticeSaliente(PlayerVertice.Vertice).Distinct());
             PathToFollow.Reverse();
             
             textShow = string.Empty;

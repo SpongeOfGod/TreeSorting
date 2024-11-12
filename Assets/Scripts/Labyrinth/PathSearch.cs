@@ -10,13 +10,12 @@ public class PathSearch : MonoBehaviour
     bool once;
     [SerializeField] List<VisualVertice> verticesPath;
     int currentIndex = 0;
-
     public void RunUpdate()
     {
         if (graphManager.PlayerVertice != null && !once)
         {
             once = true; // Inicia el chequeo de aristas salientes, aristas que tienen como origen al nodo específico.
-            verticesPath = CheckVerticeSaliente(graphManager.PlayerVertice.Vertice, new List<VisualVertice>());
+            verticesPath = CheckVerticeSaliente(graphManager.PlayerVertice.Vertice);
         }
 
         if (verticesPath != null && verticesPath.Count > 0)
@@ -45,7 +44,7 @@ public class PathSearch : MonoBehaviour
         }
     }
 
-    public List<VisualVertice> CheckVerticeSaliente(Vertice startVertice, List<VisualVertice> verticesPath)
+    public List<VisualVertice> CheckVerticeSaliente(Vertice startVertice)
     {
         if (graphManager.ExitVertice == null) return null;
 
@@ -148,6 +147,7 @@ public class PathSearch : MonoBehaviour
                 {
                     // Marcamos al vecino y agregamos su camino
                     List<VisualVertice> newPath = new List<VisualVertice>(paths[currentVertice]) { neighbor.VerticeVisual };
+
                     paths[neighbor] = newPath;
 
                     // Agregamos el vecino a la cola

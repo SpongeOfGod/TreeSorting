@@ -5,6 +5,7 @@ public class DrawLine : MonoBehaviour
     public GameObject linePrefab;
     private LineRenderer lineInstance;
     private Transform parentTransform;
+    private GameObject line;
 
     void Start()
     {
@@ -25,7 +26,6 @@ public class DrawLine : MonoBehaviour
 
     void Update()
     {
-
         if (transform.parent != parentTransform)
         {
             parentTransform = transform.parent;
@@ -45,7 +45,8 @@ public class DrawLine : MonoBehaviour
             Destroy(this);
             return;
         }
-
+        UpdateLinePositions();
+        UpdateLineName();
     }
 
     void UpdateLinePositions()
@@ -56,8 +57,8 @@ public class DrawLine : MonoBehaviour
             {
                 lineInstance.positionCount = 2;
             }
-            lineInstance.SetPosition(0, parentTransform.position);
-            lineInstance.SetPosition(1, transform.position);
+            lineInstance.SetPosition(0, parentTransform.GetComponent<RectTransform>().position);
+            lineInstance.SetPosition(1, transform.GetComponent<RectTransform>().position);
         }
     }
 
