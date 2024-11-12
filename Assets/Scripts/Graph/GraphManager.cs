@@ -62,16 +62,21 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
                     CanArrive = false;
 
 
-        if (Input.GetMouseButtonDown(0) && (ExitVertice != null || ExitVertice != PlayerVertice) && PathToFollow.Count == 0 && !InSearch && PlayerVertice != null) // Se inicia el chequeo del camino desde la posición del jugador.
+        if (Input.GetMouseButtonDown(0) && ExitVertice != PlayerVertice && PathToFollow.Count == 0 && !InSearch) // Se inicia el chequeo del camino desde la posición del jugador.
         {
+            if (PlayerVertice == null || ExitVertice == null) return;
+
             InSearch = true;
             foreach (VisualVertice visualVertice in visualVertices)
             {
                 visualVertice.Vertice.visited = false;
             }
             PlayerVertice.Vertice.visited = false;
+            List<VisualVertice> path =  PathSearch.CheckVerticeSaliente(PlayerVertice.Vertice);
 
-            PathToFollow.AddRange(PathSearch.CheckVerticeSaliente(PlayerVertice.Vertice).Distinct());
+            if (path == null) return;
+
+            PathToFollow.AddRange(path);
             PathToFollow.Reverse();
             
             textShow = string.Empty;
