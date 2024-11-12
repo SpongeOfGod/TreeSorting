@@ -22,6 +22,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     public bool CanArrive;
     public bool InSearch = false;
     public string textShow = string.Empty;
+    public UITextVerticeCosto travelCost;
 
     private int Weight;
 
@@ -74,7 +75,11 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
             PlayerVertice.Vertice.visited = false;
             List<VisualVertice> path =  PathSearch.CheckVerticeSaliente(PlayerVertice.Vertice);
 
-            if (path == null) return;
+            if (path == null) 
+            {
+                InSearch = false;
+                return;
+            }
 
             PathToFollow.AddRange(path);
             PathToFollow.Reverse();
@@ -88,12 +93,12 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
                         Weight += arista.Weight;
                     }
                 }
-            if (Weight > 0)
+            if (travelCost.weight > 0)
             {
-                textShow = $" ...Costo ${Weight} llegar hasta aquí.";
-                Weight = 0;
+                textShow = $" ...Costo ${travelCost.weight} llegar hasta aquí.";
+                travelCost.weight = 0;
             }
-            else if (Weight == 0)
+            else if (travelCost.weight == 0)
             {
                 textShow = $" ... No hubo movimiento, sigues en {PlayerVertice.Vertice.Value}.";
             }

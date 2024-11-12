@@ -115,7 +115,7 @@ public class DynamicGraph<T> : GraphTDA<T> // Grafo dinámico que hereda del con
     }
     public override int ConnectionWeight(T verticeA, T verticeB) // Devuelve el peso de la conexión de ida entre un vertice origen y un vertice destino.
     {
-        if (adyacentList.TryGetValue(verticeA, out List<(T, Arista)> listA) && adyacentList.TryGetValue(verticeB, out List<(T, Arista)> listB))
+        if (adyacentList.TryGetValue(verticeA, out List<(T, Arista)> listA))
         {
             foreach (var vertice in listA)
             {

@@ -1724,6 +1724,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f16eb0a49762a48a86172796587fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathSearch: {fileID: 1216273495}
+  graphManager: {fileID: 1216273493}
+  weight: 0
+  onceChange: 0
+  weightAddUp: 0
 --- !u!1 &928355375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,6 +2412,7 @@ MonoBehaviour:
   CanArrive: 0
   InSearch: 0
   textShow: 
+  travelCost: {fileID: 889172173}
 --- !u!4 &1216273494
 Transform:
   m_ObjectHideFlags: 0
