@@ -12,6 +12,7 @@ public class PathSearch : MonoBehaviour
     int currentIndex = 0;
     public void RunUpdate()
     {
+        if (graphManager.Graph == null) return;
         if (graphManager.PlayerVertice != null && !once)
         {
             once = true; // Inicia el chequeo de aristas salientes, aristas que tienen como origen al nodo específico.
@@ -49,7 +50,7 @@ public class PathSearch : MonoBehaviour
         if (graphManager.ExitVertice == null) return null;
 
         // Si estamos en el modo laberinto, utilizamos BFS sin priorización por distancia y peso
-        if (graphManager.Labyrinth)
+        if (graphManager.Labyrinth && graphManager.Graph != null)
         {
             return PerformBFS(startVertice);
         }

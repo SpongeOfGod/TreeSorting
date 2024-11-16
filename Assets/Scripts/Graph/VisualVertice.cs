@@ -34,6 +34,10 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             generatedColor = new Color32(30, 30, 30, 255);
         }
+        else if (spawnGraph.Maker) 
+        {
+            generatedColor = Color.gray;
+        }
         else
         {
             do
@@ -52,7 +56,6 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         string verticeText = spawnGraph.Labyrinth ? gameObject.name : Vertice.Value.ToString();
         DataText.text = verticeText;
     }
-
 
     private bool IsTooLight(Color color) // Comprueba si los valores (r)ed, (g)reen, (b)lue pasan cierto limite.
     {
@@ -86,24 +89,83 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerClick(PointerEventData data)
     {
-        Sprite.color = Color.green;
-
-
-        if (Vertice.spawnGraph.Labyrinth) 
+        if (!Vertice.spawnGraph.Maker) 
         {
-            if (Vertice.spawnGraph.PlayerVertice == null) 
+            Sprite.color = Color.green;
+
+            if (Vertice.spawnGraph.Labyrinth) 
             {
-                Vertice.spawnGraph.PlayerVertice = this;
+                if (Vertice.spawnGraph.PlayerVertice == null) 
+                {
+                    Vertice.spawnGraph.PlayerVertice = this;
+                }
+            }
+            else 
+            {
+                Vertice.spawnGraph.ExitVertice = this;
             }
         }
         else 
         {
-            Vertice.spawnGraph.ExitVertice = this;
+            ChangeVerticeByType(MazeTagManager.Instance.Input);
+        }
+    }
+
+    public void ChangeVerticeByType(string type) 
+    {
+        switch (type) 
+        {
+            case "Wall":
+                if (Vertice.spawnGraph.PlayerVertice == Vertice.VerticeVisual || Vertice.spawnGraph.ExitVertice == Vertice.VerticeVisual) 
+                    return;
+                else 
+                {
+                    Vertice.VerticeVisual.gameObject.tag = type;
+                    Sprite.color = Color.black;
+                    break;
+                }
+
+            case "Vertice":
+                if (Vertice.spawnGraph.PlayerVertice == Vertice.VerticeVisual || Vertice.spawnGraph.ExitVertice == Vertice.VerticeVisual) 
+                    return;
+                else 
+                {
+                    Vertice.VerticeVisual.gameObject.tag = type;
+                    Sprite.color = Color.gray;
+                    break;
+                }
+
+            case "Player":
+                if (gameObject.CompareTag("Wall") || Vertice.spawnGraph.ExitVertice == Vertice.VerticeVisual) 
+                    return;
+                else 
+                {
+                    if (Vertice.spawnGraph.PlayerVertice != null)
+                        Vertice.spawnGraph.PlayerVertice.Sprite.color = Color.gray;
+
+                    Vertice.spawnGraph.PlayerVertice = Vertice.VerticeVisual;
+                    Sprite.color = Color.blue;
+                    break;
+                }
+
+            case "Exit":
+                if (gameObject.CompareTag("Wall") || Vertice.spawnGraph.PlayerVertice == Vertice.VerticeVisual) 
+                    return;
+                else 
+                {
+                    if (Vertice.spawnGraph.ExitVertice != null)
+                        Vertice.spawnGraph.ExitVertice.Sprite.color = Color.gray;
+
+                    Vertice.spawnGraph.ExitVertice = Vertice.VerticeVisual;
+                    Sprite.color = Color.red;
+                    break;
+                }
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Sprite.color = originalColor;
+        if (!spawnGraph.Maker)
+            Sprite.color = originalColor;
     }
 }

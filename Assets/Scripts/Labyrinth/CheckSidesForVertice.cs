@@ -9,7 +9,7 @@ public class CheckSidesForVertice : MonoBehaviour
     [SerializeField] int connectionWeight = 1;
     void Update()
     {
-        if (!once) 
+        if (!once && graphManager.Graph != null) 
         {
             once = true;
             numberOfPossibilities--;

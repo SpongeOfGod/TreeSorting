@@ -11,7 +11,6 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     [SerializeField] private Canvas canvas;
     [SerializeField] private float elapsedTime = 0;
     [SerializeField] float delayTime = 5;
-    [SerializeField] public bool Labyrinth = false;
     [SerializeField] PathSearch PathSearch;
     public List<VisualVertice> VisualVertices => visualVertices;
     public List<VisualVertice> PathToFollow = new List<VisualVertice>(); // Vertices que forman el camino que se debe tomar.
@@ -23,18 +22,32 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     public bool InSearch = false;
     public string textShow = string.Empty;
     public UITextVerticeCosto travelCost;
+    public bool Labyrinth = false;
+    public bool Maker = false;
 
     private int Weight;
 
-    void Start()
+    private void Start()
+    {
+        if (!Labyrinth) 
+        {
+            Initialize();
+        }
+    }
+    public void Initialize()
     {
         Graph = new DynamicGraph<Vertice>();
 
         Graph.InitializeGraph(this);
 
-        foreach (var vertice in visualVertices)
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Vertice");
+        foreach (var vertice in gameObjects)
         {
-            Graph.AddVertice(vertice.Vertice);
+            vertice.TryGetComponent<VisualVertice>(out VisualVertice visualVertice);
+            if (visualVertice != null) 
+            {
+                Graph.AddVertice(visualVertice.Vertice);
+            }
         }
 
         if (!Labyrinth)
