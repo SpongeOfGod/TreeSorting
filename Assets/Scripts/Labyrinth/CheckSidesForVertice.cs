@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class CheckSidesForVertice : MonoBehaviour
 {
-    bool once;
+    public bool CheckSidesOnce;
     int numberOfPossibilities = 1;
     [SerializeField] GraphManager graphManager;
     [SerializeField] float rayLength = 200f;
     [SerializeField] int connectionWeight = 1;
     void Update()
     {
-        if (!once && graphManager.Graph != null) 
+        if (graphManager.Graph != null && (!CheckSidesOnce || graphManager.Maker)) 
         {
-            once = true;
+            CheckSidesOnce = true;
             numberOfPossibilities--;
             foreach (VisualVertice visualVertice in graphManager.VisualVertices) 
             {
-                VisualVertice upVertice = SpawnRays(visualVertice.transform.position, transform.up, rayLength);
-                VisualVertice downVertice = SpawnRays(visualVertice.transform.position, transform.up * -1, rayLength);
-                VisualVertice leftVertice = SpawnRays(visualVertice.transform.position, transform.right * -1, rayLength);
-                VisualVertice rightVertice = SpawnRays(visualVertice.transform.position, transform.right, rayLength);
+                VisualVertice upVertice = SpawnRays(visualVertice, transform.up, rayLength);
+                VisualVertice downVertice = SpawnRays(visualVertice, transform.up * -1, rayLength);
+                VisualVertice leftVertice = SpawnRays(visualVertice, transform.right * -1, rayLength);
+                VisualVertice rightVertice = SpawnRays(visualVertice, transform.right, rayLength);
 
                 if (upVertice != null)
                     graphManager.AddConnectionBetweenPoints(visualVertice.Vertice, upVertice.Vertice, connectionWeight);
@@ -35,9 +35,9 @@ public class CheckSidesForVertice : MonoBehaviour
         }
     }
 
-    public VisualVertice SpawnRays(Vector3 origin, Vector3 direction, float maxDistance) 
+    public VisualVertice SpawnRays(VisualVertice origin, Vector3 direction, float maxDistance) 
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, maxDistance);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(origin.transform.position, direction, maxDistance);
 
         bool hitWall = false;
         VisualVertice verticeToConnect = null;
@@ -45,6 +45,10 @@ public class CheckSidesForVertice : MonoBehaviour
         {
             if (hit.transform.gameObject.CompareTag("Wall")) 
             {
+                if (hit.transform.gameObject.TryGetComponent<VisualVertice>(out VisualVertice vertice)) 
+                {
+                    graphManager.Graph.RemoveConnection(origin.Vertice, vertice.Vertice);
+                }
                 hitWall = true;
             }
 
@@ -56,7 +60,7 @@ public class CheckSidesForVertice : MonoBehaviour
 
         if (!hitWall) 
         {
-            Debug.DrawRay(origin, direction * maxDistance, Color.red, 99f);
+            Debug.DrawRay(origin.transform.position, direction * maxDistance, Color.red, 99f);
             return verticeToConnect;
         }
         else 

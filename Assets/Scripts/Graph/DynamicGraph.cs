@@ -89,10 +89,16 @@ public class DynamicGraph<T> : GraphTDA<T> // Grafo dinámico que hereda del con
     {
         if (adyacentList.TryGetValue(verticeOrigen, out List<(T, Arista)> listA) && adyacentList.TryGetValue(verticeDestino, out List<(T, Arista)> listB))
         {
-            foreach (var vertice in listA) 
+            for (int i = 0; i < listA.Count; i++)
             {
-                if (Equals(vertice.Item1, verticeDestino))
-                    listA.Remove(vertice);
+                if (Equals(listA[i].Item1, verticeDestino))
+                    listA.Remove(listA[i]);
+            }
+
+            for (int i = 0; i < listB.Count; i++)
+            {
+                if (Equals(listB[i].Item1, verticeDestino))
+                    listB.Remove(listB[i]);
             }
             return true;
         }

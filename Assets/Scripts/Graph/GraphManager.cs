@@ -24,6 +24,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     public UITextVerticeCosto travelCost;
     public bool Labyrinth = false;
     public bool Maker = false;
+    private bool resolveLabyrinth;
 
     private int Weight;
 
@@ -33,9 +34,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
         {
             Initialize();
         }
-    }
-    public void Initialize()
-    {
+
         Graph = new DynamicGraph<Vertice>();
 
         Graph.InitializeGraph(this);
@@ -44,24 +43,32 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
         foreach (var vertice in gameObjects)
         {
             vertice.TryGetComponent<VisualVertice>(out VisualVertice visualVertice);
-            if (visualVertice != null) 
+            if (visualVertice != null)
             {
                 Graph.AddVertice(visualVertice.Vertice);
             }
         }
-
+    }
+    public void Initialize()
+    {
         if (!Labyrinth)
             PlayerVertice = visualVertices[0];
+
+        Maker = false;
+        resolveLabyrinth = true;
     }
 
     void Update()
     {
+        if (Maker) return;
         if (!Labyrinth)
         {
             GraphTravel();
         }
         else
         {
+            if (!resolveLabyrinth) return;
+
             PathSearch.RunUpdate();
         }
     }

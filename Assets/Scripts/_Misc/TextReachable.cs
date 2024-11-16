@@ -1,12 +1,14 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class TextReachable : MonoBehaviour
 {
-    [SerializeField] private string reachable = "ALCANZABLE";
-    [SerializeField] private string noReachable = "NO ALCANZABLE";
+    [SerializeField] private string reachable = "TIENE SOLUCIÓN";
+    [SerializeField] private string noReachable = "NO TIENE SOLUCIÓN";
     private TextMeshProUGUI textMeshProUGUI;
     [SerializeField] GraphManager graphManager;
+    public PathSearch pathSearch;
     void Start()
     {
         textMeshProUGUI = GetComponent<TextMeshProUGUI>();
@@ -15,6 +17,16 @@ public class TextReachable : MonoBehaviour
 
     void Update()
     {
-        textMeshProUGUI.text = graphManager.CanArrive ? reachable : noReachable;
+        if (graphManager.PlayerVertice != null && graphManager.ExitVertice != null && graphManager.PlayerVertice != graphManager.ExitVertice) 
+        {
+            if(pathSearch.CheckVerticeSaliente(graphManager.PlayerVertice.Vertice) != null) 
+            {
+                textMeshProUGUI.text = reachable;
+            }
+            else 
+            {
+                textMeshProUGUI.text = noReachable;
+            }
+        }
     }
 }
