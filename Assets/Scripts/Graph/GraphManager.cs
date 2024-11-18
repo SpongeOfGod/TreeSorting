@@ -72,14 +72,6 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
 
     private void GraphTravel()
     {
-        if (HoverVertice != null)
-            foreach (var arista in PlayerVertice.Vertice.AristasSalientes)
-                if (arista.DestinationVert == HoverVertice.Vertice)
-                    CanArrive = true;
-                else
-                    CanArrive = false;
-
-
         if (Input.GetMouseButtonDown(0) && ExitVertice != PlayerVertice && PathToFollow.Count == 0 && !InSearch) // Se inicia el chequeo del camino desde la posición del jugador.
         {
             if (PlayerVertice == null || ExitVertice == null) return;
