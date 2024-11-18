@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GraphManager : MonoBehaviour // Manager de Grafo.
@@ -68,7 +66,6 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
         else
         {
             if (!resolveLabyrinth) return;
-
             PathSearch.RunUpdate();
         }
     }

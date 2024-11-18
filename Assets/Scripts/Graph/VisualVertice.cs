@@ -34,10 +34,6 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             generatedColor = new Color32(30, 30, 30, 255);
         }
-        else if (spawnGraph.Maker) 
-        {
-            generatedColor = Color.gray;
-        }
         else
         {
             do
@@ -50,6 +46,10 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             while (IsTooLight(generatedColor) || IsPrimaryColor(generatedColor));
         }
 
+        if (spawnGraph.Maker)
+        {
+            generatedColor = Color.gray;
+        }
         originalColor = generatedColor;
         Sprite.color = originalColor;
 
