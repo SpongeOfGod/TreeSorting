@@ -22,10 +22,12 @@ public class TextReachable : MonoBehaviour
             if(pathSearch.CheckVerticeSaliente(graphManager.PlayerVertice.Vertice) != null) 
             {
                 textMeshProUGUI.text = reachable;
+                graphManager.CanArrive = true;
             }
             else 
             {
                 textMeshProUGUI.text = noReachable;
+                graphManager.CanArrive = false;
             }
         }
     }

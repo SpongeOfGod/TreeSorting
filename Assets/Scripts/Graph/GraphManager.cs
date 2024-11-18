@@ -85,11 +85,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
             if (PlayerVertice == null || ExitVertice == null) return;
 
             InSearch = true;
-            foreach (VisualVertice visualVertice in visualVertices)
-            {
-                visualVertice.Vertice.visited = false;
-            }
-            PlayerVertice.Vertice.visited = false;
+
             List<VisualVertice> path =  PathSearch.CheckVerticeSaliente(PlayerVertice.Vertice);
 
             if (path == null) 
@@ -123,11 +119,6 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
 
         if (PathToFollow.Count > 0)
         {
-            foreach (VisualVertice visualVertice in visualVertices)
-            {
-                visualVertice.Vertice.visited = false;
-            }
-
             PathSearch.TravelPath(PathToFollow);
         }
 

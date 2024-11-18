@@ -8348,6 +8348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1216273493}
+  pathSearch: {fileID: 1812263605}
+  isRandomizing: 1
 --- !u!114 &1510442774
 MonoBehaviour:
   m_ObjectHideFlags: 0
