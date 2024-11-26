@@ -21,12 +21,17 @@ public class RandomizeMaze : MonoBehaviour
         if (!isRandomizing && !manager.CanArrive) 
         {
             StartCoroutine(RandomizeDelay());
+        } 
+        else if (manager.CanArrive) 
+        {
+            isRandomizing = true;
         }
     }
 
     IEnumerator RandomizeDelay() 
     {
         isRandomizing = true;
+        manager.ReOrder();
         string input = string.Empty;
         manager.PlayerVertice = null;
         manager.ExitVertice = null;

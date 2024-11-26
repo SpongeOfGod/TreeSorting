@@ -91,11 +91,9 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (!Vertice.spawnGraph.Maker) 
         {
-            Sprite.color = Color.green;
-
             if (Vertice.spawnGraph.Labyrinth) 
             {
-                if (Vertice.spawnGraph.PlayerVertice == null) 
+                if (!Vertice.spawnGraph.InSearch) 
                 {
                     Vertice.spawnGraph.PlayerVertice = this;
                 }
@@ -105,7 +103,7 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 Vertice.spawnGraph.ExitVertice = this;
             }
         }
-        else 
+        else if (Vertice.spawnGraph.Maker && !Vertice.spawnGraph.InSearch)
         {
             ChangeVerticeByType(MazeTagManager.Instance.Input);
         }
@@ -144,6 +142,7 @@ public class VisualVertice : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                         Vertice.spawnGraph.PlayerVertice.Sprite.color = Color.gray;
 
                     Vertice.spawnGraph.PlayerVertice = Vertice.VerticeVisual;
+                    Vertice.spawnGraph.StartVertice = this;
                     Sprite.color = Color.blue;
                     break;
                 }

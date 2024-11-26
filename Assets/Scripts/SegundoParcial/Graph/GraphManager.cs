@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GraphManager : MonoBehaviour // Manager de Grafo.
 {
@@ -15,6 +16,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     public VisualVertice PlayerVertice; // Vertice actual en el que se encuentra el jugador.
     public VisualVertice HoverVertice;
     public VisualVertice ExitVertice;
+    public VisualVertice StartVertice;
     public DynamicGraph<Vertice> Graph; // Grafo dinámico, guarda los vertices.
     public bool CanArrive;
     public bool InSearch = false;
@@ -49,9 +51,10 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     }
     public void Initialize()
     {
-        if (!Labyrinth)
+        if (!Labyrinth) 
+        {
             PlayerVertice = visualVertices[0];
-
+        }
         Maker = false;
         resolveLabyrinth = true;
     }
@@ -125,12 +128,7 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
     {
         if (Graph.AddConnection(VerticeA, VerticeB, weight) && !Labyrinth)
         {
-            Debug.Log($"Added a connection between {VerticeA.Value} (Origin) and {VerticeB.Value} (Destination)");
             LineArrowGenerator(VerticeA, VerticeB);
-        }
-        else
-        {
-            Debug.Log($"Couldn't add connection - Connection already exists between {VerticeA.Value} (Origin) and {VerticeB.Value} (Destination)");
         }
     }
 
@@ -155,5 +153,20 @@ public class GraphManager : MonoBehaviour // Manager de Grafo.
 
             GameObject arrowObject = Instantiate(arrow, visualVerticeB.transform.position + arrowOffset, rotation, canvas.transform);
         }
+    }
+
+    public void ReOrder() 
+    {
+        if (SceneManager.GetActiveScene().name == "Maze Maker")
+            Maker = true;
+
+        PathToFollow.Clear();
+        resolveLabyrinth = false;
+        PlayerVertice = StartVertice;
+        PathSearch.once = false;
+        InSearch = false;
+        if (PathSearch.VerticesPath != null)
+            PathSearch.VerticesPath.Clear();
+        PathSearch.currentIndex = 0;
     }
 }

@@ -7,9 +7,10 @@ public class PathSearch : MonoBehaviour
     [SerializeField] GraphManager graphManager;
     [SerializeField] private float elapsedTime = 0;
     [SerializeField] float delayTime = 5;
-    bool once;
+    public bool once;
     [SerializeField] List<VisualVertice> verticesPath;
-    int currentIndex = 0;
+    public int currentIndex = 0;
+    public List<VisualVertice> VerticesPath { get => verticesPath; set => verticesPath = value; }
     public void RunUpdate()
     {
         if (graphManager.Graph == null) return;

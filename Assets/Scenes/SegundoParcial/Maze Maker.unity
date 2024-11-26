@@ -6820,6 +6820,7 @@ MonoBehaviour:
   PlayerVertice: {fileID: 0}
   HoverVertice: {fileID: 0}
   ExitVertice: {fileID: 0}
+  StartVertice: {fileID: 0}
   CanArrive: 0
   InSearch: 0
   textShow: 
@@ -8667,7 +8668,6 @@ GameObject:
   - component: {fileID: 1602122786}
   - component: {fileID: 1602122785}
   - component: {fileID: 1602122784}
-  - component: {fileID: 1602122783}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -8695,18 +8695,6 @@ RectTransform:
   m_AnchoredPosition: {x: -263.2, y: -56}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1602122783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602122781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ec68e2e3affbe444bf71ffc1758d40f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1602122784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8750,7 +8738,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1602122785}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1216273493}
+        m_TargetAssemblyTypeName: GraphManager, Assembly-CSharp
+        m_MethodName: ReOrder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1602122785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9603,7 +9603,9 @@ MonoBehaviour:
   graphManager: {fileID: 1216273493}
   elapsedTime: 0
   delayTime: 0.5
+  once: 0
   verticesPath: []
+  currentIndex: 0
 --- !u!4 &1812263606
 Transform:
   m_ObjectHideFlags: 0
