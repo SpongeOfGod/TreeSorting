@@ -2,20 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MazeTagManager : MonoBehaviour
+public class MazeTagManager : MonoBehaviourSingleton<MazeTagManager>
 {
-    public static MazeTagManager Instance;
     public string Input;
-    private void Awake()
+
+    protected override void Awaken()
     {
-        if (Instance == null) 
-        {
-            Instance = this;
-        }
-        else if (Instance != this) 
-        {
-            Destroy(gameObject);
-        }
+        // Ahora este es el Awake de este script
     }
 
     private void Start()
