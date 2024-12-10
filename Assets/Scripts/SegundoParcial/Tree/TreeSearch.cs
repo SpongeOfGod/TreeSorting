@@ -15,17 +15,17 @@ public class TreeSearch : MonoBehaviour
     public TextMeshProUGUI depthDisplay;
     private void Awake()
     {
-        preOrderButton.onClick.AddListener(SearchByPreOrder);
-        inOrderButton.onClick.AddListener(SearchByInOrder);
-        postOrderButton.onClick.AddListener(SearchByPostOrder);
+        //preOrderButton.onClick.AddListener(SearchByPreOrder);
+        //inOrderButton.onClick.AddListener(SearchByInOrder);
+        //postOrderButton.onClick.AddListener(SearchByPostOrder);
 
-        testSpawnTree = SpawnABBTree == null ? SpawnAVLTree.AVLTree : SpawnABBTree.ABBTree;
+       // testSpawnTree = SpawnABBTree == null ? SpawnAVLTree.AVLTree : SpawnABBTree.ABBTree;
     }
 
     private void FixedUpdate()
     {
         int depth = CheckDepth(testSpawnTree.root);    
-        depthDisplay.text = depth.ToString();    
+      //  depthDisplay.text = depth.ToString();    
     }
     int CheckDepth(Nodo nodo) 
     {

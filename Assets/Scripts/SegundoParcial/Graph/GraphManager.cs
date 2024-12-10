@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// MVP
+/// MVC
+
 public class GraphManager : MonoBehaviour // Manager de Grafo.
 {
     [SerializeField] List<VisualVertice> visualVertices = new List<VisualVertice>(); // Contiene todos los vertices iniciales.
